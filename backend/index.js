@@ -1,24 +1,17 @@
 const express = require('express')
 const app = express()
-const port = 3000
-const data = require('./data.json')
+const port = 3010
+const cors = require('cors')
 
-app.get('/pokemon', (req, res) => {
-    // let pokemons = Object.keys(data)
-    // data.forEach
-  res.send(data)
-  console.log(data);
+app.use(cors())
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send("Hello from group one")
 })
 
-// app.get('/pokemon/:id', (req, res) => {
-//     const id = req.params
-//     const allPokemons = data;
-//     const targetPokemon = data.map((target) => {
-//         return target.id === id
-//     })
-//     console.log(targetPokemon)
-//     res.send('hello');
-// })
+const pokemon = require("./routes/pokemonRoutes");
+app.use("/pokemons", pokemon);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`)
