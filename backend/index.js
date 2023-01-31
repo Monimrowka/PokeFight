@@ -13,7 +13,6 @@ app.get('/', (req, res) => {
 const pokemon = require("./routes/pokemonRoutes");
 app.use("/pokemons", pokemon);
 
-
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`)
 })

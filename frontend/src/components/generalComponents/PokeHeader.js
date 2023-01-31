@@ -11,7 +11,7 @@ export default function PokeHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="pokemons">All Pokemons</Nav.Link>
+            <Nav.Link href="/">All Pokemons</Nav.Link>
             <Nav.Link href="pokemons/:id">Pokemon by id</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

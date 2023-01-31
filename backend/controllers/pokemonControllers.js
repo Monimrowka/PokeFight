@@ -7,9 +7,7 @@ const getAllPokemons = (req, res) => {
 const getPokemonById = (req, res) => {
     try {
       const { id } = req.params;
-      const pokemon = data.find((value) => {
-        return value.id == id
-      })
+      const pokemon = data.find((value) => value.id === +id)
       res.status(200).json(
         pokemon
       );

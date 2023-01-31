@@ -1,15 +1,19 @@
+import { NavLink } from "react-router-dom";
 
-export default function AllPokemons({pokemons}) {
+export default function AllPokemons({ pokemons }) {
   return (
     <div>
-           List of all pokemons
-            {/* {pokemons.map((pokemon) => {
-                return (
-                    <h3>{pokemon.name}</h3>
-                )
-            })} */}
-
-
+      <ul>
+        {pokemons.map((pokemon) => {
+          return (
+            <li key={pokemon.id}>
+              <NavLink to={`/pokemons/${pokemon.id}`}>
+                {pokemon.name.english}
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
     </div>
-  )
+  );
 }
