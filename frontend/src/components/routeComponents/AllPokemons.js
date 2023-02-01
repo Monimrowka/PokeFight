@@ -7,7 +7,7 @@ export default function AllPokemons({ pokemons }) {
         {pokemons.map((pokemon) => {
           return (
             <li key={pokemon.id}>
-              <NavLink to={`/pokemons/${pokemon.id}`}>
+              <NavLink style={{textDecoration: "none", color: "inherit"}} to={`/pokemons/${pokemon.id}`}>
                 {pokemon.name.english}
               </NavLink>
             </li>

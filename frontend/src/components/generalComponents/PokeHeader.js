@@ -2,8 +2,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import SearchBar from "./SearchBar";
 
-export default function PokeHeader() {
+export default function PokeHeader({ pokemons }) {
   return (
     <Navbar className="sticky-top" bg="light" expand="lg">
       <Container>
@@ -25,6 +26,7 @@ export default function PokeHeader() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <SearchBar pokemons={pokemons}/>
         </Navbar.Collapse>
       </Container>
     </Navbar>

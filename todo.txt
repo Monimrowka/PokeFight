@@ -1,0 +1,1 @@
+handling thousends of errors while searching for a pokemon name (even though it works fine)

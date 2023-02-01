@@ -10,10 +10,10 @@ import axios from "axios";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
-
+  
   useEffect(() => {
     axios
-      .get("http://localhost:3010/pokemons")
+      .get(`http://localhost:3010/pokemons/`)
       .then((response) => {
         setPokemons(response.data);
         //  console.log(response.data)
@@ -25,13 +25,13 @@ function App() {
 
   return (
     <div className="App">
-      <PokeHeader />
+      <PokeHeader pokemons={pokemons} />
       <Container className="appContainer">
         <Routes>
           <Route path="/" element={<AllPokemons pokemons={pokemons} />} />
           <Route
             path="pokemons/:id"
-            element={<PokemonById pokemons={pokemons} />}
+            element={<PokemonById />}
           />
         </Routes>
       </Container>
