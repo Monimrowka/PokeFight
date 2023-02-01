@@ -1,17 +1,26 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom"
 
-export default function SearchBar({ setSearch }) {
+export default function SearchBar({ pokemons }) {
   const [value, setValue] = useState("");
 
-  const handleSearchChange = (e) => {
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
     setValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setSearch(value);
+    pokemons.map((pokemon) => {
+      if (value === pokemon.name?.english) {
+        return navigate(`/pokemons/${pokemon.id}`);
+      } else {
+        console.log("error!");
+      }
+    })
     setValue("");
   };
 
@@ -22,7 +31,7 @@ export default function SearchBar({ setSearch }) {
         placeholder="Search for pokemon by name"
         className="me-2"
         aria-label="Search"
-        onChange={handleSearchChange}
+        onChange={handleChange}
         value={value}
       />
       <Button variant="outline-dark" onClick={handleSubmit}>

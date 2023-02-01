@@ -11,7 +11,6 @@ import axios from "axios";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   
-
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/`)
@@ -26,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <PokeHeader />
+      <PokeHeader pokemons={pokemons} />
       <Container className="appContainer">
         <Routes>
           <Route path="/" element={<AllPokemons pokemons={pokemons} />} />
