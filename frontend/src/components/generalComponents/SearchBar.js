@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+// import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function SearchBar({ pokemons }) {
   const [value, setValue] = useState("");
-
+  
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,12 +16,13 @@ export default function SearchBar({ pokemons }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     pokemons.map((pokemon) => {
-      if (value === pokemon.name?.english) {
+      if (value.toLowerCase() === pokemon.name?.english.toLowerCase()) {
         return navigate(`/pokemons/${pokemon.id}`);
       } else {
-        console.log("error!");
+        // toast.error(`No matching results for ${value}`);
+        console.log("so many toasts")
       }
     })
     setValue("");
@@ -34,9 +38,11 @@ export default function SearchBar({ pokemons }) {
         onChange={handleChange}
         value={value}
       />
-      <Button variant="outline-dark" onClick={handleSubmit}>
+      <Button variant="outline-dark" type="submit">
         Search
       </Button>
+      {/* <ToastContainer /> */}
     </Form>
+    
   );
 }

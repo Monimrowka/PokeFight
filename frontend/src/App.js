@@ -31,7 +31,7 @@ function App() {
           <Route path="/" element={<AllPokemons pokemons={pokemons} />} />
           <Route
             path="pokemons/:id"
-            element={<PokemonById pokemons={pokemons} />}
+            element={<PokemonById />}
           />
         </Routes>
       </Container>
