@@ -2,3 +2,9 @@
     margin-top: 2.5em;
     margin-bottom: 5em;
 }
+
+.pokemons {
+    display: flex;
+    flex-direction: row;
+    gap: 5em;
+}
