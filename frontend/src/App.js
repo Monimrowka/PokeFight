@@ -10,10 +10,11 @@ import axios from "axios";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
+  
 
   useEffect(() => {
     axios
-      .get("http://localhost:3010/pokemons")
+      .get(`http://localhost:3010/pokemons/`)
       .then((response) => {
         setPokemons(response.data);
         //  console.log(response.data)

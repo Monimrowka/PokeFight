@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import SearchBar from "../routeComponents/SearchBar";
 
 export default function PokeHeader() {
   return (
@@ -25,6 +26,7 @@ export default function PokeHeader() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <SearchBar />
         </Navbar.Collapse>
       </Container>
     </Navbar>
