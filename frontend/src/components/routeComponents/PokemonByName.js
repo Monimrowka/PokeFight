@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-// import RandomPokemon from "./RandomPokemon"
+import RandomPokemon from "./RandomPokemon";
 // import Battleground from "./Battleground";
 
 export default function PokemonByName() {
   const [pokemon, setPokemon] = useState({});
+  const [showRandom, setShowRandom] = useState(false);
   const { name } = useParams();
   const navigate = useNavigate();
+
+  const onClick = () => setShowRandom(true);
 
   useEffect(() => {
     axios
@@ -20,38 +23,38 @@ export default function PokemonByName() {
       .catch((error) => {
         console.log(error);
       });
-  }, [name]);
+  }, []);
 
   return (
     <div>
-    <div className="pokemons">
-      <div className="chosenPokemon">
-        <h3>{pokemon.name?.english}</h3>
-        <p>Type:</p>
-        <ul>
-          {pokemon.type?.map((type) => (
-            <li key={type}>{type}</li>
-          ))}
-        </ul>
-        <p>Base:</p>
-        <ul>
-          <li>HP: {pokemon.base?.HP}</li>
-          <li>Attack: {pokemon.base?.Attack}</li>
-          <li>Defense: {pokemon.base?.Defense}</li>
-          <li>Sp. Attack: {pokemon.base?.["Sp. Attack"]}</li>
-          <li>Sp. Defense: {pokemon.base?.["Sp. Defense"]}</li>
-          <li>Speed: {pokemon.base?.Speed}</li>
-        </ul>
-        <Button onClick={() => navigate(-1)} className="btn-dark">
-          Back
-        </Button>
-        {/* <Button className="btn-warning">
-          Fight a radom Pokemon
-        </Button> */}
+      <div className="pokemons">
+        <div className="chosenPokemon">
+          <h3>{pokemon.name?.english}</h3>
+          <p>Type:</p>
+          <ul>
+            {pokemon.type?.map((type) => (
+              <li key={type}>{type}</li>
+            ))}
+          </ul>
+          <p>Base:</p>
+          <ul>
+            <li>HP: {pokemon.base?.HP}</li>
+            <li>Attack: {pokemon.base?.Attack}</li>
+            <li>Defense: {pokemon.base?.Defense}</li>
+            <li>Sp. Attack: {pokemon.base?.["Sp. Attack"]}</li>
+            <li>Sp. Defense: {pokemon.base?.["Sp. Defense"]}</li>
+            <li>Speed: {pokemon.base?.Speed}</li>
+          </ul>
+          <Button onClick={() => navigate(-1)} className="btn-dark">
+            Back
+          </Button>
+          <Button className="btn-warning" onClick={onClick}>
+            Fight a radom Pokemon
+          </Button>
+        </div>
+        {showRandom ? <RandomPokemon /> : null}
       </div>
-      {/* <RandomPokemon /> */}
-    </div>
-    {/* <Battleground /> */}
+      {/* <Battleground /> */}
     </div>
   );
 }
