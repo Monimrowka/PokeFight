@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-import RandomPokemon from "./RandomPokemon"
-import Battleground from "./Battleground";
+// import RandomPokemon from "./RandomPokemon"
+// import Battleground from "./Battleground";
 
-export default function PokemonById() {
+export default function PokemonByName() {
   const [pokemon, setPokemon] = useState({});
-  const { id } = useParams();
+  const { name } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3010/pokemons/${id}`)
+      .get(`http://localhost:3010/pokemons/${name}`)
       .then((response) => {
         setPokemon(response.data);
         //  console.log(response.data)
@@ -20,7 +20,7 @@ export default function PokemonById() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [name]);
 
   return (
     <div>
@@ -45,13 +45,13 @@ export default function PokemonById() {
         <Button onClick={() => navigate(-1)} className="btn-dark">
           Back
         </Button>
-        <Button className="btn-warning">
+        {/* <Button className="btn-warning">
           Fight a radom Pokemon
-        </Button>
+        </Button> */}
       </div>
-      <RandomPokemon />
+      {/* <RandomPokemon /> */}
     </div>
-    <Battleground />
+    {/* <Battleground /> */}
     </div>
   );
 }
