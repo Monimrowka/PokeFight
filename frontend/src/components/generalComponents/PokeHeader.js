@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import SearchBar from "./SearchBar";
 
-export default function PokeHeader({ pokemons }) {
+export default function PokeHeader() {
   return (
     <Navbar className="sticky-top" bg="light" expand="lg">
       <Container>
@@ -13,7 +13,7 @@ export default function PokeHeader({ pokemons }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">All Pokemons</Nav.Link>
-            <Nav.Link href="pokemons/:id">Pokemon by id</Nav.Link>
+            <Nav.Link href="#">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -26,7 +26,7 @@ export default function PokeHeader({ pokemons }) {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <SearchBar pokemons={pokemons}/>
+          <SearchBar />
         </Navbar.Collapse>
       </Container>
     </Navbar>

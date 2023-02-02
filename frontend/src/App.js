@@ -4,7 +4,7 @@ import "./App.css";
 import PokeFooter from "./components/generalComponents/PokeFooter";
 import PokeHeader from "./components/generalComponents/PokeHeader";
 import AllPokemons from "./components/routeComponents/AllPokemons";
-import PokemonById from "./components/routeComponents/PokemonById";
+import PokemonByName from "./components/routeComponents/PokemonByName";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -25,13 +25,13 @@ function App() {
 
   return (
     <div className="App">
-      <PokeHeader pokemons={pokemons} />
+      <PokeHeader />
       <Container className="appContainer">
         <Routes>
           <Route path="/" element={<AllPokemons pokemons={pokemons} />} />
           <Route
-            path="pokemons/:id"
-            element={<PokemonById />}
+            path="pokemons/:name"
+            element={<PokemonByName />}
           />
         </Routes>
       </Container>

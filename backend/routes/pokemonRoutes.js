@@ -3,11 +3,13 @@ const app = express.Router();
 
 const {
     getAllPokemons,
-    getPokemonById,
+    // getPokemonById,
+    getPokemonByName,
   } = require("../controllers/pokemonControllers");
 
 app.route("/").get(getAllPokemons);
 
-app.route("/:id").get(getPokemonById);
+// app.route("/:id").get(getPokemonById);
+app.route("/:name").get(getPokemonByName);
 
   module.exports = app;
