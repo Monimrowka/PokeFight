@@ -2,14 +2,14 @@ const express = require("express");
 const app = express.Router();
 
 const {
-    getAllPokemons,
-    // getPokemonById,
-    getPokemonByName,
-  } = require("../controllers/pokemonControllers");
+  getAllPokemons,
+  getPokemonByName,
+  getRandomPokemon,
+} = require("../controllers/pokemonControllers");
 
 app.route("/").get(getAllPokemons);
 
-// app.route("/:id").get(getPokemonById);
+app.route("/random/:id").get(getRandomPokemon);
 app.route("/:name").get(getPokemonByName);
 
-  module.exports = app;
+module.exports = app;
