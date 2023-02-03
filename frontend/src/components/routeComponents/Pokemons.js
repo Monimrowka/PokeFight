@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
 import RandomPokemon from "./RandomPokemon";
+import Battleground from "./Battleground";
 
 export default function Pokemons() {
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ export default function Pokemons() {
         </div>
       ) : null}
       </div>
+      <Battleground pokemon={pokemon} random={random}/>
     </div>
   );
 }
