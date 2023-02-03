@@ -28,7 +28,7 @@ export default function Pokemons() {
 
   //state for button showing random Pokemon
   const [showRandom, setShowRandom] = useState(false);
-  const onClick = () => setShowRandom(true);
+  const showRandomPokemon = () => setShowRandom(true);
 
   // state for random Pokemon by id
   const [random, setRandom] = useState({});
@@ -46,6 +46,10 @@ export default function Pokemons() {
         console.log(error);
       });
   }, [id]);
+
+  //state for button showing battleground
+  const [showBattleground, setShowBattleground] = useState(false);
+  const battlegroundOn = () => setShowBattleground(true);
 
   // backend request to get a different random Pokemon as onClick function
   const otherRandom = () => {
@@ -67,25 +71,44 @@ export default function Pokemons() {
         onClick={() => navigate(-1)}
         className="btn-dark"
       >
-        Back
+        Back to the list
       </Button>
       <div className="pokemons">
         <div className="chosenPokemon">
-            <PokemonByName pokemon={pokemon} />
-            <Button id="showRandomPokemon" className="btn-warning" onClick={onClick}>
-                Fight a radom Pokemon
-            </Button>
-        </div>
-      {showRandom ? (
-        <div className="randomPokemon">
-          <RandomPokemon random={random} />
-          <Button id="otherRandomPokemon" className="btn-warning" onClick={otherRandom}>
-            Chose another Pokemon
+          <PokemonByName pokemon={pokemon} />
+          <Button
+            id="showRandomPokemon"
+            className="btn-warning"
+            onClick={showRandomPokemon}
+          >
+            Fight a radom Pokemon
           </Button>
         </div>
-      ) : null}
+        {showRandom ? (
+          <>
+            <Button
+              id="pokemonFight"
+              className="btn-danger"
+              onClick={battlegroundOn}
+            >
+              FIGHT
+            </Button>
+            <div className="randomPokemon">
+              <RandomPokemon random={random} />
+              <Button
+                id="otherRandomPokemon"
+                className="btn-warning"
+                onClick={otherRandom}
+              >
+                Chose another Pokemon
+              </Button>
+            </div>
+          </>
+        ) : null}
       </div>
-      <Battleground pokemon={pokemon} random={random}/>
+      {showBattleground ? (
+        <Battleground pokemon={pokemon} random={random} />
+      ) : null}
     </div>
   );
 }
