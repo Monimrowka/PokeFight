@@ -1,6 +1,6 @@
 export default function PokemonByName({ pokemon }) {
   return (
-    <div className="chosenPokemon">
+    <div>
       <h3>{pokemon.name?.english}</h3>
       <p>Type:</p>
       <ul>

@@ -68,18 +68,22 @@ export default function Pokemons() {
       >
         Back
       </Button>
-      <PokemonByName pokemon={pokemon} />
-      <Button id="showRandomPokemon" className="btn-warning" onClick={onClick}>
-        Fight a radom Pokemon
-      </Button>
+      <div className="pokemons">
+        <div className="chosenPokemon">
+            <PokemonByName pokemon={pokemon} />
+            <Button id="showRandomPokemon" className="btn-warning" onClick={onClick}>
+                Fight a radom Pokemon
+            </Button>
+        </div>
       {showRandom ? (
-        <>
+        <div className="randomPokemon">
           <RandomPokemon random={random} />
           <Button id="otherRandomPokemon" className="btn-warning" onClick={otherRandom}>
             Chose another Pokemon
           </Button>
-        </>
+        </div>
       ) : null}
+      </div>
     </div>
   );
 }

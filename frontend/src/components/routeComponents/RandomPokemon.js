@@ -1,6 +1,6 @@
 export default function RandomPokemon({ random }) {
   return (
-    <div className="randomPokemon">
+    <div>
       <h3>{random.name?.english}</h3>
       <p>Type:</p>
       <ul>
