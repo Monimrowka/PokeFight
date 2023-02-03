@@ -4,13 +4,14 @@ import "./App.css";
 import PokeFooter from "./components/generalComponents/PokeFooter";
 import PokeHeader from "./components/generalComponents/PokeHeader";
 import AllPokemons from "./components/routeComponents/AllPokemons";
-import PokemonByName from "./components/routeComponents/PokemonByName";
+import Pokemons from "./components/routeComponents/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import HomePage from "./components/routeComponents/HomePage";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
-  
+
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/`)
@@ -28,11 +29,12 @@ function App() {
       <PokeHeader />
       <Container className="appContainer">
         <Routes>
-          <Route path="/" element={<AllPokemons pokemons={pokemons} />} />
+          <Route path="/" element={<HomePage />} />
           <Route
-            path="pokemons/:name"
-            element={<PokemonByName />}
+            path="/pokemons"
+            element={<AllPokemons pokemons={pokemons} />}
           />
+          <Route path="pokemons/:name" element={<Pokemons />} />
         </Routes>
       </Container>
       <PokeFooter />

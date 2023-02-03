@@ -8,12 +8,13 @@ export default function PokeHeader() {
   return (
     <Navbar className="sticky-top" bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">PokeFight App</Navbar.Brand>
+        <Navbar.Brand href="/">Pokémon</Navbar.Brand>
+        {/* <Nav.Link href="/">choose them, fight them, catch them!</Nav.Link> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">All Pokemons</Nav.Link>
-            <Nav.Link href="#">Link</Nav.Link>
+            <Nav.Link href="/pokemons">List of all Pokémons</Nav.Link>
+            {/* <Nav.Link href="#">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -24,7 +25,7 @@ export default function PokeHeader() {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
           <SearchBar />
         </Navbar.Collapse>
