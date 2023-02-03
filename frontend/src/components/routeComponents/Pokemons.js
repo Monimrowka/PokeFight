@@ -24,45 +24,32 @@ export default function Pokemons() {
       .catch((error) => {
         console.log(error);
       });
-  }, [name]);
-
-  //state for button showing random Pokemon
-  const [showRandom, setShowRandom] = useState(false);
-  const showRandomPokemon = () => setShowRandom(true);
+  }, [name]); 
 
   // state for random Pokemon by id
-  const [random, setRandom] = useState({});
-  const { id } = useParams();
-
-  // backend request to get a random Pokemon
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3010/pokemons/random/${id}`)
-      .then((response) => {
-        setRandom(response.data);
-        //  console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
+  const [random, setRandom] = useState(localStoragePokemon);
 
   //state for button showing battleground
   const [showBattleground, setShowBattleground] = useState(false);
   const battlegroundOn = () => setShowBattleground(true);
 
-  // backend request to get a different random Pokemon as onClick function
-  const otherRandom = () => {
+  // backend request to get a random Pokemon as onClick function
+  const showRandom = () => {
     axios
-      .get(`http://localhost:3010/pokemons/random/${id}`)
+      .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
         setRandom(response.data);
+        // setShowRandom(true)
+        localStorage.setItem("random", JSON.stringify(response.data))
         //  console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+   //saving the random pokemon in localstorage 
+   const localStoragePokemon = JSON.parse(localStorage.getItem("random")) || {};
 
   return (
     <div>
@@ -79,12 +66,13 @@ export default function Pokemons() {
           <Button
             id="showRandomPokemon"
             className="btn-warning"
-            onClick={showRandomPokemon}
+            onClick={showRandom}
           >
             Fight a radom Pokemon
           </Button>
         </div>
-        {showRandom ? (
+
+        {random.id ? (
           <>
             <Button
               id="pokemonFight"
@@ -98,14 +86,16 @@ export default function Pokemons() {
               <Button
                 id="otherRandomPokemon"
                 className="btn-warning"
-                onClick={otherRandom}
+                onClick={showRandom}
               >
                 Chose another Pokemon
               </Button>
             </div>
           </>
         ) : null}
+
       </div>
+
       {showBattleground ? (
         <Battleground pokemon={pokemon} random={random} />
       ) : null}
