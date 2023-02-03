@@ -24,7 +24,9 @@ export default function Pokemons() {
       .catch((error) => {
         console.log(error);
       });
-  }, [name]); 
+  }, [name]);
+
+  const localStoragePokemon = JSON.parse(localStorage.getItem("random")) || {};
 
   // state for random Pokemon by id
   const [random, setRandom] = useState(localStoragePokemon);
@@ -33,8 +35,8 @@ export default function Pokemons() {
   const [showBattleground, setShowBattleground] = useState(false);
   const battlegroundOn = () => setShowBattleground(true);
 
-  // backend request to get a random Pokemon as onClick function
-  const showRandom = () => {
+  // backend request to get a different random Pokemon as onClick function
+  const otherRandom = () => {
     axios
       .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
@@ -48,9 +50,6 @@ export default function Pokemons() {
       });
   };
 
-   //saving the random pokemon in localstorage 
-   const localStoragePokemon = JSON.parse(localStorage.getItem("random")) || {};
-
   return (
     <div>
       <Button
@@ -63,13 +62,13 @@ export default function Pokemons() {
       <div className="pokemons">
         <div className="chosenPokemon">
           <PokemonByName pokemon={pokemon} />
-          <Button
+          {/* <Button
             id="showRandomPokemon"
             className="btn-warning"
-            onClick={showRandom}
+            onClick={otherRandom}
           >
             Fight a radom Pokemon
-          </Button>
+          </Button> */}
         </div>
 
         {random.id ? (
@@ -86,7 +85,7 @@ export default function Pokemons() {
               <Button
                 id="otherRandomPokemon"
                 className="btn-warning"
-                onClick={showRandom}
+                onClick={otherRandom}
               >
                 Chose another Pokemon
               </Button>
