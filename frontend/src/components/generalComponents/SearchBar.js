@@ -32,7 +32,7 @@ export default function SearchBar() {
     <Form className="d-flex" onSubmit={handleSubmit}>
       <Form.Control
         type="search"
-        placeholder="Search for pokemon by name"
+        placeholder="Search by name"
         className="me-2"
         aria-label="Search"
         onChange={handleChange}

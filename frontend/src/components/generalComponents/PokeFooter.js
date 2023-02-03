@@ -4,12 +4,10 @@ import Navbar from "react-bootstrap/Navbar";
 
 export default function PokeFooter() {
   return (
-    <Navbar className="fixed-bottom" bg="light" expand="lg">
+    <Navbar className="fixed-bottom" bg="light">
       <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
+          <Nav.Link>Provided to you by Agata, Monika, Simran and Artur ✌</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
