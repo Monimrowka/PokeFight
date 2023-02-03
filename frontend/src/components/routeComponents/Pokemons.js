@@ -45,7 +45,7 @@ export default function Pokemons() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   // backend request to get a different random Pokemon as onClick function
   const otherRandom = () => {
