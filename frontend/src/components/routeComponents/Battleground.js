@@ -1,9 +1,5 @@
 export default function Battleground({ pokemon, random }) {
-
-
-
-
-  let pokeState 
+  let pokeState;
   switch (Math.floor(Math.random() * 3) + 1) {
     case 1:
       pokeState = "is very angry and ready to fight!";
@@ -11,37 +7,26 @@ export default function Battleground({ pokemon, random }) {
     case 2:
       pokeState = "is in a fighting mood today and he's attacking right away!";
       break;
-      default:
+    default:
       pokeState =
-        "behaves inconspicuously, but only to lull the vigilance of the opponent. It attacks unexpectedly!";   
+        "behaves inconspicuously, but only to lull the vigilance of the opponent. It attacks unexpectedly!";
   }
 
-  console.log(`The state is: ${pokeState}`)
-
-  let theFirstAttacker; 
+  let theFirstAttacker;
   switch (Math.floor(Math.random() * 2) + 1) {
     case 1:
       theFirstAttacker = pokemon.name?.english;
       break;
     default:
-      theFirstAttacker = random.name?.english; 
+      theFirstAttacker = random.name?.english;
   }
 
-  // console.log(`the first attacker is: ${theFirstAttacker}`)
-  // console.log(`the NAME of first attacker is: ${theFirstAttacker.name?.english}`)
-  // console.log(`the NAME of pokemon is: ${pokemon.name?.english}`)
-    
-
   return (
-    <div>
-
+    <div className="battleground">
       <p>
         {theFirstAttacker} {pokeState}
       </p>
       <p>{theFirstAttacker} attacks first!</p>
-
-
-
       <p>
         <b>{pokemon.name?.english}'s</b> attack power is{" "}
         <b>{pokemon.base?.Attack}</b> and it has <b>{pokemon.base?.HP}</b>{" "}
