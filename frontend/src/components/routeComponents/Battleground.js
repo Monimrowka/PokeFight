@@ -12,32 +12,74 @@ export default function Battleground({ pokemon, random }) {
         "behaves inconspicuously, but only to lull the vigilance of the opponent. It attacks unexpectedly!";
   }
 
-  let theFirstAttacker;
-  switch (Math.floor(Math.random() * 2) + 1) {
-    case 1:
-      theFirstAttacker = pokemon.name?.english;
-      break;
-    default:
-      theFirstAttacker = random.name?.english;
+  // define first and second Attacker
+  let firstAttacker;
+  let secondAttacker;
+  if (pokemon.base?.Speed > random.base?.Speed) {
+    firstAttacker = pokemon;
+    secondAttacker = random;
+  } else {
+    firstAttacker = random;
+    secondAttacker = pokemon;
+  }
+
+  // first attacker attack output
+  let firstAttackOutcome;
+  if (firstAttacker.base?.Attack <= secondAttacker.base?.Defense) {
+    firstAttackOutcome = `nothing happens`;
+  } else {
+    let cameThrough = firstAttacker.base?.Attack - secondAttacker.base?.Defense;
+    firstAttackOutcome = `only ${cameThrough} came through`;
+  }
+
+  // second attacker attack output
+  let secondAttackOutcome;
+  let firstAttackerLife;
+  if (secondAttacker.base?.Attack <= firstAttacker.base?.Defense) {
+    secondAttackOutcome = `nothing happens`;
+  } else {
+    let cameThrough = secondAttacker.base?.Attack - firstAttacker.base?.Defense;
+    secondAttackOutcome = `${cameThrough} of damage come through`;
+    firstAttackerLife = firstAttacker.base?.HP - cameThrough;
   }
 
   return (
     <div className="battleground">
+      {/* define the first attacker */}
+      <hr />
       <p>
-        {theFirstAttacker} {pokeState}
-      </p>
-      <p>{theFirstAttacker} attacks first!</p>
-      <p>
-        <b>{pokemon.name?.english}'s</b> attack power is{" "}
-        <b>{pokemon.base?.Attack}</b> and it has <b>{pokemon.base?.HP}</b>{" "}
-        health points.
+        <b>{firstAttacker.name?.english}</b> {pokeState}
       </p>
       <p>
-        <b>{random.name?.english}'s</b> attack power is{" "}
-        <b>{random.base?.Attack}</b> and it has <b>{random.base?.HP}</b> health
-        points.
+        <b>{firstAttacker.name?.english}</b> attacks first!
       </p>
-      <p>The winner is: I can not do math 🤷‍♀️</p>
+
+      {/* define result of first attack */}
+      <hr />
+      <p>
+        {" "}
+        It's using its attack power of <b>{firstAttacker.base?.Attack}</b>, but{" "}
+        {firstAttackOutcome}!*
+      </p>
+
+      {/* next phase */}
+      <hr />
+      <p>
+        Now <b>{secondAttacker.name?.english}</b> has the chance to prove
+        itself! It attacks with its attack power of <b>{secondAttacker.base?.Attack}</b>, and{" "}
+        {secondAttackOutcome}
+      </p>
+      <p>
+        <b>{firstAttacker.name?.english}</b> remains on{" "}
+        <b>{firstAttackerLife}</b> health points.
+      </p>
+
+      {/* **** */}
+      <hr />
+      <p>
+        *{secondAttacker.name?.english}'s defense is{" "}
+        {secondAttacker.base?.Defense}.
+      </p>
     </div>
   );
 }

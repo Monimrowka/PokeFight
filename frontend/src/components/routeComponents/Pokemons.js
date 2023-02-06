@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-import Battleground from "./Battleground";
+// import Battleground from "./Battleground";
 import Pokemon from "./Pokemon";
+import Battleground2 from "./Battleground2";
 
 export default function Pokemons() {
   const navigate = useNavigate();
+  const [isPokemonLoading, setIsPokemonLoading] = useState(true);
 
   // state for chosen Pokemon by name
   const [pokemon, setPokemon] = useState({});
@@ -19,6 +21,7 @@ export default function Pokemons() {
       .then((response) => {
         setPokemon(response.data);
         //  console.log(response.data)
+        setIsPokemonLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -49,33 +52,44 @@ export default function Pokemons() {
     <div>
       <Button
         id="navigateBack"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/pokemons")}
         className="btn-dark"
       >
         Back to the list
       </Button>
       <div className="pokemons">
-        <div className="chosenPokemon">
-          <Pokemon version={pokemon} />
-        </div>
-        <Button
-          id="pokemonFight"
-          className="btn-danger"
-        >
+
+        {isPokemonLoading ? (
+          <div>Loading Pokemon...</div>
+        ) : (
+          <div className="chosenPokemon">
+            {" "}
+            <Pokemon version={pokemon} />
+          </div>
+        )}
+
+        {/* <Button id="pokemonFight" className="btn-danger">
           FIGHT
-        </Button>
-        <div className="randomPokemon">
-          <Pokemon version={random} />
-          <Button
-            id="otherRandomPokemon"
-            className="btn-warning"
-            onClick={otherRandom}
-          >
-            Chose another Pokemon
-          </Button>
-        </div>
+        </Button> */}
+
+          <div className="randomPokemon">
+            <Pokemon version={random} />
+            <Button
+              id="otherRandomPokemon"
+              className="btn-warning"
+              onClick={otherRandom}
+            >
+              Chose another Pokemon
+            </Button>
+          </div>   
+
       </div>
-      <Battleground pokemon={pokemon} random={random} />
+      {/* <Battleground pokemon={pokemon} random={random} /> */}
+      {/* {isPokemonLoading ? (
+          <div>Loading Battleground...</div>
+        ) : (
+      <Battleground2 pokemon={pokemon} random={random} />
+      )} */}
     </div>
   );
 }

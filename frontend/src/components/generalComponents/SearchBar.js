@@ -16,8 +16,9 @@ export default function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     axios
-      .get(`http://localhost:3010/pokemons/${value}`)
+      .get(`http://localhost:3010/pokemons/${name}`)
       .then((response) => {
         navigate(`/pokemons/${response.data.name.english}`);
         //  console.log(response.data)
