@@ -20,5 +20,5 @@ const { pokemonFightsRouter } = require("./routes/pokemonFightsRoutes");
 app.use("/pokemons/pokemonfights", pokemonFightsRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`);
+  console.log(`App listening on port http://localhost:${port}`);
 });

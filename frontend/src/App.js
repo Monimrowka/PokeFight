@@ -8,15 +8,31 @@ import Pokemons from "./components/routeComponents/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
+import FightScores from "./components/routeComponents/FightScores";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
+  const [fightScores, setFightScores] = useState([]);
 
+  //setPokemons
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/`)
       .then((response) => {
         setPokemons(response.data);
+        //  console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  //setFightScores
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3010/pokemons/pokemonfights/showfights`)
+      .then((response) => {
+        setFightScores(response.data);
         //  console.log(response.data)
       })
       .catch((error) => {
@@ -35,6 +51,7 @@ function App() {
             element={<AllPokemons pokemons={pokemons} />}
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
+          <Route path="/fightscores" element={<FightScores fightScores={fightScores}/>} />
         </Routes>
       </Container>
       <PokeFooter />
