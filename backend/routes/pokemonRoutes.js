@@ -9,7 +9,7 @@ const {
 
 app.route("/").get(getAllPokemons);
 
-app.route("/random/:id").get(getRandomPokemon);
+app.route("/random/").get(getRandomPokemon);
 app.route("/:name").get(getPokemonByName);
 
 module.exports = app;

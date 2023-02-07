@@ -1,60 +1,40 @@
-import PokemonByName from "./PokemonByName";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-import RandomPokemon from "./RandomPokemon";
 import Battleground from "./Battleground";
+import Pokemon from "./Pokemon";
 
 export default function Pokemons() {
   const navigate = useNavigate();
+  const [isPokemonLoading, setIsPokemonLoading] = useState(true);
+  const [startFight, setStartFight] = useState(true);
+  const [isRandomPokemon, setIsRandomPokemon] = useState(false);
+  const [random, setRandom] = useState({});
+  const [showRandom, setShowRandom] = useState(false);
+  const [noMoreChanging, setNoMoreChanging] = useState(false);
 
-  // state for Pokemon by name
+  // state for chosen Pokemon by name
   const [pokemon, setPokemon] = useState({});
   const { name } = useParams();
 
-  // backend request to get a Pokemon by name
+  // backend request to get a Pokemon by name and a random pokemon by id
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/${name}`)
       .then((response) => {
         setPokemon(response.data);
         //  console.log(response.data)
+        setIsPokemonLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [name]);
 
-  //state for button showing random Pokemon
-  const [showRandom, setShowRandom] = useState(false);
-  const showRandomPokemon = () => setShowRandom(true);
-
-  // state for random Pokemon by id
-  const [random, setRandom] = useState({});
-  const { id } = useParams();
-
-  // backend request to get a random Pokemon
-  useEffect(() => {
+  const randomPokemon = () => {
     axios
-      .get(`http://localhost:3010/pokemons/random/${id}`)
-      .then((response) => {
-        setRandom(response.data);
-        //  console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
-
-  //state for button showing battleground
-  const [showBattleground, setShowBattleground] = useState(false);
-  const battlegroundOn = () => setShowBattleground(true);
-
-  // backend request to get a different random Pokemon as onClick function
-  const otherRandom = () => {
-    axios
-      .get(`http://localhost:3010/pokemons/random/${id}`)
+      .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
         setRandom(response.data);
         //  console.log(response.data)
@@ -64,51 +44,82 @@ export default function Pokemons() {
       });
   };
 
+  const showRandomPokemon = () => setShowRandom(true);
+  const showBattleground = () => setStartFight(false);
+  const randomPokemonSetter = () => setIsRandomPokemon(true);
+  const noMoreRandom = () => setNoMoreChanging(true);
+
   return (
     <div>
       <Button
         id="navigateBack"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/pokemons")}
         className="btn-dark"
       >
         Back to the list
       </Button>
       <div className="pokemons">
-        <div className="chosenPokemon">
-          <PokemonByName pokemon={pokemon} />
-          <Button
-            id="showRandomPokemon"
-            className="btn-warning"
-            onClick={showRandomPokemon}
-          >
-            Fight a radom Pokemon
-          </Button>
-        </div>
-        {showRandom ? (
-          <>
-            <Button
-              id="pokemonFight"
-              className="btn-danger"
-              onClick={battlegroundOn}
-            >
-              FIGHT
-            </Button>
-            <div className="randomPokemon">
-              <RandomPokemon random={random} />
+        {isPokemonLoading ? (
+          <div>Loading Pokemon of your choice...</div>
+        ) : (
+          <div className="chosenPokemon">
+            {" "}
+            <Pokemon version={pokemon} />
+            {isRandomPokemon ? (
+              ""
+            ) : (
               <Button
-                id="otherRandomPokemon"
+                id="showRandomPokemon"
                 className="btn-warning"
-                onClick={otherRandom}
+                onClick={() => {
+                  randomPokemon();
+                  showRandomPokemon();
+                  randomPokemonSetter();
+                }}
               >
-                Chose another Pokemon
+                Fight a radom Pokemon
               </Button>
-            </div>
-          </>
-        ) : null}
+            )}
+          </div>
+        )}
+
+        {showRandom ? (
+          <div className="randomPokemon">
+            <Pokemon version={random} />
+
+            {noMoreChanging ? (
+              ""
+            ) : (
+              <>
+                <Button
+                  id="otherRandomPokemon"
+                  className="btn-warning"
+                  onClick={randomPokemon}
+                >
+                  Chose another Pokemon
+                </Button>
+                <Button
+                  id="pokemonFight"
+                  className="btn-danger"
+                  onClick={() => {
+                    showBattleground();
+                    noMoreRandom();
+                  }}
+                >
+                  Fight this Pokemon
+                </Button>
+              </>
+            )}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      {showBattleground ? (
+      {startFight ? (
+        <div>Waiting to start the fight...</div>
+      ) : (
         <Battleground pokemon={pokemon} random={random} />
-      ) : null}
+      )}
     </div>
   );
 }

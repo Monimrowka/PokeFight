@@ -8,7 +8,7 @@ export default function HomePage() {
     <div className="homepageDiv">
         <h1>Pokémon</h1>
         <p>Choose them, fight them, catch them all!</p>
-        <img src={pokeball} alt="Pokeball!" style={{width: "35% "}}/>
+        <img src={pokeball} alt="Picture!" style={{width: "35% "}}/>
         <h3>How this works</h3>
         <p>Go the <NavLink to="/pokemons">Pokémon</NavLink> list or search for your favorite one using the searchbar.</p> 
         <p>After getting to the page of your selected Pokémon, you can find another one to fight with.</p>
