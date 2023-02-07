@@ -18,11 +18,16 @@ export default function Pokemons() {
   const [pokemon, setPokemon] = useState({});
   const { name } = useParams();
 
+  //variable to store previously fetched pokemon
+  const [previousPokemon, setPreviousPokemon] = useState({});
+  const [prevRandom, setPrevRandom] = useState({});
+
   // backend request to get a Pokemon by name and a random pokemon by id
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/${name}`)
       .then((response) => {
+        setPreviousPokemon(pokemon);
         setPokemon(response.data);
         //  console.log(response.data)
         setIsPokemonLoading(false);
@@ -33,6 +38,7 @@ export default function Pokemons() {
   }, [name]);
 
   const randomPokemon = () => {
+    setPrevRandom(random);
     axios
       .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
@@ -48,6 +54,11 @@ export default function Pokemons() {
   const showBattleground = () => setStartFight(false);
   const randomPokemonSetter = () => setIsRandomPokemon(true);
   const noMoreRandom = () => setNoMoreChanging(true);
+
+  // Function to return to the previous Pokemon
+  const returnToPrevious = () => {
+    setRandom(prevRandom);
+  };
 
   return (
     <div>
@@ -91,6 +102,14 @@ export default function Pokemons() {
               ""
             ) : (
               <>
+              { prevRandom !== null ? (
+              <Button
+              id="returnToPrevious"
+              className="btn-warning"
+              onClick={returnToPrevious}
+              > Latest Pokemon </Button>
+               ) : null }
+
                 <Button
                   id="otherRandomPokemon"
                   className="btn-warning"
