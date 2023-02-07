@@ -1,85 +1,61 @@
 export default function Battleground({ pokemon, random }) {
-  let pokeState;
-  switch (Math.floor(Math.random() * 3) + 1) {
-    case 1:
-      pokeState = "is very angry and ready to fight!";
-      break;
-    case 2:
-      pokeState = "is in a fighting mood today and he's attacking right away!";
-      break;
-    default:
-      pokeState =
-        "behaves inconspicuously, but only to lull the vigilance of the opponent. It attacks unexpectedly!";
-  }
+  let firstPokemon;
+  let secondPokemon;
+  const getFirstAttacker = () => {
+    if (pokemon?.base?.Speed > random?.base?.Speed) {
+      firstPokemon = pokemon;
+      secondPokemon = random;
+    } else if (pokemon?.base?.Speed < random?.base?.Speed) {
+      firstPokemon = random;
+      secondPokemon = pokemon;
+    }
+  };
+  getFirstAttacker();
+  console.log(firstPokemon.name?.english);
 
-  // define first and second Attacker
-  let firstAttacker;
-  let secondAttacker;
-  if (pokemon.base?.Speed > random.base?.Speed) {
-    firstAttacker = pokemon;
-    secondAttacker = random;
-  } else {
-    firstAttacker = random;
-    secondAttacker = pokemon;
-  }
+  const fight = () => {
+    let lifeOfFirst = firstPokemon.base?.HP;
+    let lifeOfSecond = secondPokemon.base?.HP;
+    const attackOfFirst =
+      firstPokemon.base?.Attack - secondPokemon.base?.Defense;
+    const attackOfSecond =
+      secondPokemon.base?.Attack - firstPokemon.base?.Defense;
+    const firstFights = () => {console.log(`Attack of first is ${attackOfFirst}`);
+    attackOfFirst > 0 ? (lifeOfSecond -= attackOfFirst) : (lifeOfSecond -= 0);
+    console.log(`Life of second ${lifeOfSecond}`);}
+    const secondFights = () => {console.log(`Attack of second is ${attackOfSecond}`);
+    attackOfSecond > 0 ? (lifeOfFirst -= attackOfSecond) : (lifeOfFirst -= 0);
+    console.log(`Life of first ${lifeOfFirst}`);}
 
-  // first attacker attack output
-  let firstAttackOutcome;
-  if (firstAttacker.base?.Attack <= secondAttacker.base?.Defense) {
-    firstAttackOutcome = `nothing happens`;
-  } else {
-    let cameThrough = firstAttacker.base?.Attack - secondAttacker.base?.Defense;
-    firstAttackOutcome = `only ${cameThrough} came through`;
-  }
+    //first phase - firstPokemon attacks secondPokemon
+    console.log(`FIRST PHASE`);
+    firstFights();
 
-  // second attacker attack output
-  let secondAttackOutcome;
-  let firstAttackerLife;
-  if (secondAttacker.base?.Attack <= firstAttacker.base?.Defense) {
-    secondAttackOutcome = `nothing happens`;
-  } else {
-    let cameThrough = secondAttacker.base?.Attack - firstAttacker.base?.Defense;
-    secondAttackOutcome = `${cameThrough} of damage come through`;
-    firstAttackerLife = firstAttacker.base?.HP - cameThrough;
-  }
+    // if the first Pokemon wins at phase 1 or else go to phase 2
+    lifeOfSecond <= 0
+      ? console.log(`${firstPokemon.name?.english} won!`)
+      : console.log(`SECOND PHASE`)
+        secondFights();
+    
+    // if the second Pokemon wins at phase 2 or else go to phase 3
+    lifeOfFirst <= 0
+      ? console.log(`${secondPokemon.name?.english} won!`)
+      : console.log(`THIRD PHASE`);
+         firstFights();
 
-  return (
-    <div className="battleground">
-      {/* define the first attacker */}
-      <hr />
-      <p>
-        <b>{firstAttacker.name?.english}</b> {pokeState}
-      </p>
-      <p>
-        <b>{firstAttacker.name?.english}</b> attacks first!
-      </p>
+    // if the first Pokemon wins at phase 3 or else go to phase 4
+    lifeOfSecond <= 0
+      ? console.log(`${firstPokemon.name?.english} won!`)
+      : console.log(`FOURTH PHASE`);
+      secondFights();
 
-      {/* define result of first attack */}
-      <hr />
-      <p>
-        {" "}
-        It's using its attack power of <b>{firstAttacker.base?.Attack}</b>, but{" "}
-        {firstAttackOutcome}!*
-      </p>
+    // if the second Pokemon wins at phase 4 or else call it a tie
+    lifeOfFirst <= 0
+      ? console.log(`${secondPokemon.name?.english} won!`)
+      : console.log(`Nobody wins`);
+  };
 
-      {/* next phase */}
-      <hr />
-      <p>
-        Now <b>{secondAttacker.name?.english}</b> has the chance to prove
-        itself! It attacks with its attack power of <b>{secondAttacker.base?.Attack}</b>, and{" "}
-        {secondAttackOutcome}
-      </p>
-      <p>
-        <b>{firstAttacker.name?.english}</b> remains on{" "}
-        <b>{firstAttackerLife}</b> health points.
-      </p>
+  fight();
 
-      {/* **** */}
-      <hr />
-      <p>
-        *{secondAttacker.name?.english}'s defense is{" "}
-        {secondAttacker.base?.Defense}.
-      </p>
-    </div>
-  );
+  return <div>Battleground</div>;
 }

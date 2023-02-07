@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-// import Battleground from "./Battleground";
+import Battleground from "./Battleground";
 import Pokemon from "./Pokemon";
-import Battleground2 from "./Battleground2";
+
 
 export default function Pokemons() {
   const navigate = useNavigate();
   const [isPokemonLoading, setIsPokemonLoading] = useState(true);
+  const [startFight, setStartFight] = useState(true);
 
   // state for chosen Pokemon by name
   const [pokemon, setPokemon] = useState({});
@@ -48,6 +49,11 @@ export default function Pokemons() {
       });
   };
 
+  // onClick function for the FIGHT button
+  const showBattleground = () => {
+    setStartFight(false);
+  }
+
   return (
     <div>
       <Button
@@ -68,9 +74,9 @@ export default function Pokemons() {
           </div>
         )}
 
-        {/* <Button id="pokemonFight" className="btn-danger">
+        <Button id="pokemonFight" className="btn-danger" onClick={showBattleground}>
           FIGHT
-        </Button> */}
+        </Button>
 
           <div className="randomPokemon">
             <Pokemon version={random} />
@@ -84,12 +90,11 @@ export default function Pokemons() {
           </div>   
 
       </div>
-      {/* <Battleground pokemon={pokemon} random={random} /> */}
-      {/* {isPokemonLoading ? (
-          <div>Loading Battleground...</div>
+      {startFight ? (
+          <div>Waiting to start the fight...</div>
         ) : (
-      <Battleground2 pokemon={pokemon} random={random} />
-      )} */}
+      <Battleground pokemon={pokemon} random={random} />
+      )}
     </div>
   );
 }

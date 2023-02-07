@@ -20,12 +20,12 @@ export default function Pokemon({ version }) {
     <div>
       <img src={pokePic} alt={version.name?.english} style={{ width: 150 }} />
       <h3>{version.name?.english}</h3>
-      <p>Type:</p>
+      {/* <p>Type:</p>
       <ul>
         {version.type?.map((type) => (
           <li key={type}>{type}</li>
         ))}
-      </ul>
+      </ul> */}
       <p>Base:</p>
       <ul>
         <li>Speed: {version.base?.Speed}</li>

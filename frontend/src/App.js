@@ -7,7 +7,7 @@ import AllPokemons from "./components/routeComponents/AllPokemons";
 import Pokemons from "./components/routeComponents/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import HomePage from "./components/routeComponents/HomePage";
+import HomePage from "./components/generalComponents/HomePage";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
