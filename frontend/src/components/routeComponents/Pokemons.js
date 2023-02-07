@@ -5,17 +5,20 @@ import Button from "react-bootstrap/esm/Button";
 import Battleground from "./Battleground";
 import Pokemon from "./Pokemon";
 
-
 export default function Pokemons() {
   const navigate = useNavigate();
   const [isPokemonLoading, setIsPokemonLoading] = useState(true);
   const [startFight, setStartFight] = useState(true);
+  const [isRandomPokemon, setIsRandomPokemon] = useState(false);
+  const [random, setRandom] = useState({});
+  const [showRandom, setShowRandom] = useState(false);
+  const [noMoreChanging, setNoMoreChanging] = useState(false);
 
   // state for chosen Pokemon by name
   const [pokemon, setPokemon] = useState({});
   const { name } = useParams();
 
-  // backend request to get a Pokemon by name
+  // backend request to get a Pokemon by name and a random pokemon by id
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/${name}`)
@@ -29,19 +32,11 @@ export default function Pokemons() {
       });
   }, [name]);
 
-  // state for localStorage - if no pokemon then empty object
-  const localStoragePokemon = JSON.parse(localStorage.getItem("random")) || {};
-
-  // state for random Pokemon by id
-  const [random, setRandom] = useState(localStoragePokemon);
-
-  // backend request to get a different random Pokemon as onClick function
-  const otherRandom = () => {
+  const randomPokemon = () => {
     axios
       .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
         setRandom(response.data);
-        localStorage.setItem("random", JSON.stringify(response.data));
         //  console.log(response.data)
       })
       .catch((error) => {
@@ -49,10 +44,10 @@ export default function Pokemons() {
       });
   };
 
-  // onClick function for the FIGHT button
-  const showBattleground = () => {
-    setStartFight(false);
-  }
+  const showRandomPokemon = () => setShowRandom(true);
+  const showBattleground = () => setStartFight(false);
+  const randomPokemonSetter = () => setIsRandomPokemon(true);
+  const noMoreRandom = () => setNoMoreChanging(true);
 
   return (
     <div>
@@ -64,36 +59,66 @@ export default function Pokemons() {
         Back to the list
       </Button>
       <div className="pokemons">
-
         {isPokemonLoading ? (
-          <div>Loading Pokemon...</div>
+          <div>Loading Pokemon of your choice...</div>
         ) : (
           <div className="chosenPokemon">
             {" "}
             <Pokemon version={pokemon} />
+            {isRandomPokemon ? (
+              ""
+            ) : (
+              <Button
+                id="showRandomPokemon"
+                className="btn-warning"
+                onClick={() => {
+                  randomPokemon();
+                  showRandomPokemon();
+                  randomPokemonSetter();
+                }}
+              >
+                Fight a radom Pokemon
+              </Button>
+            )}
           </div>
         )}
 
-        <Button id="pokemonFight" className="btn-danger" onClick={showBattleground}>
-          FIGHT
-        </Button>
-
+        {showRandom ? (
           <div className="randomPokemon">
             <Pokemon version={random} />
-            <Button
-              id="otherRandomPokemon"
-              className="btn-warning"
-              onClick={otherRandom}
-            >
-              Chose another Pokemon
-            </Button>
-          </div>   
 
+            {noMoreChanging ? (
+              ""
+            ) : (
+              <>
+                <Button
+                  id="otherRandomPokemon"
+                  className="btn-warning"
+                  onClick={randomPokemon}
+                >
+                  Chose another Pokemon
+                </Button>
+                <Button
+                  id="pokemonFight"
+                  className="btn-danger"
+                  onClick={() => {
+                    showBattleground();
+                    noMoreRandom();
+                  }}
+                >
+                  Fight this Pokemon
+                </Button>
+              </>
+            )}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       {startFight ? (
-          <div>Waiting to start the fight...</div>
-        ) : (
-      <Battleground pokemon={pokemon} random={random} />
+        <div>Waiting to start the fight...</div>
+      ) : (
+        <Battleground pokemon={pokemon} random={random} />
       )}
     </div>
   );

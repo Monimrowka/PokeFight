@@ -3,12 +3,14 @@ import { useState } from "react";
 
 export default function Pokemon({ version }) {
   const [pokePic, setPokePic] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const apiPicture = () => {
     let pokeName = version.name?.english.toLowerCase();
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${pokeName}/`)
       .then((response) => {
         setPokePic(response.data.sprites.front_default);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -18,7 +20,11 @@ export default function Pokemon({ version }) {
 
   return (
     <div>
-      <img src={pokePic} alt={version.name?.english} style={{ width: 150 }} />
+      {isLoading ? (
+        <p>Loading random Pokemon</p>
+      ) : (
+        <img src={pokePic} alt={version.name?.english} style={{ width: 150 }} />
+      )}
       <h3>{version.name?.english}</h3>
       {/* <p>Type:</p>
       <ul>

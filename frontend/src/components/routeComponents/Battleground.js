@@ -1,4 +1,24 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
+
 export default function Battleground({ pokemon, random }) {
+  const navigate = useNavigate();
+
+  let pokeState;
+  switch (Math.floor(Math.random() * 3) + 1) {
+    case 1:
+      pokeState = "is very angry and ready to fight!";
+      break;
+    case 2:
+      pokeState = "is in a fighting mood today and he's attacking right away!";
+      break;
+    default:
+      pokeState =
+        "behaves inconspicuously, but only to lull the vigilance of the opponent. It attacks unexpectedly!";
+      break;
+  }
+
   let firstPokemon;
   let secondPokemon;
   const getFirstAttacker = () => {
@@ -11,51 +31,81 @@ export default function Battleground({ pokemon, random }) {
     }
   };
   getFirstAttacker();
-  console.log(firstPokemon.name?.english);
 
-  const fight = () => {
-    let lifeOfFirst = firstPokemon.base?.HP;
-    let lifeOfSecond = secondPokemon.base?.HP;
-    const attackOfFirst =
-      firstPokemon.base?.Attack - secondPokemon.base?.Defense;
-    const attackOfSecond =
-      secondPokemon.base?.Attack - firstPokemon.base?.Defense;
-    const firstFights = () => {console.log(`Attack of first is ${attackOfFirst}`);
-    attackOfFirst > 0 ? (lifeOfSecond -= attackOfFirst) : (lifeOfSecond -= 0);
-    console.log(`Life of second ${lifeOfSecond}`);}
-    const secondFights = () => {console.log(`Attack of second is ${attackOfSecond}`);
-    attackOfSecond > 0 ? (lifeOfFirst -= attackOfSecond) : (lifeOfFirst -= 0);
-    console.log(`Life of first ${lifeOfFirst}`);}
+  let lifeOfFirst = firstPokemon.base?.HP;
+  let lifeOfSecond = secondPokemon.base?.HP;
 
-    //first phase - firstPokemon attacks secondPokemon
-    console.log(`FIRST PHASE`);
-    firstFights();
+  const attackOfFirst = firstPokemon.base?.Attack - secondPokemon.base?.Defense;
+  const attackOfSecond =
+    secondPokemon.base?.Attack - firstPokemon.base?.Defense;
 
-    // if the first Pokemon wins at phase 1 or else go to phase 2
-    lifeOfSecond <= 0
-      ? console.log(`${firstPokemon.name?.english} won!`)
-      : console.log(`SECOND PHASE`)
-        secondFights();
-    
-    // if the second Pokemon wins at phase 2 or else go to phase 3
-    lifeOfFirst <= 0
-      ? console.log(`${secondPokemon.name?.english} won!`)
-      : console.log(`THIRD PHASE`);
-         firstFights();
-
-    // if the first Pokemon wins at phase 3 or else go to phase 4
-    lifeOfSecond <= 0
-      ? console.log(`${firstPokemon.name?.english} won!`)
-      : console.log(`FOURTH PHASE`);
-      secondFights();
-
-    // if the second Pokemon wins at phase 4 or else call it a tie
-    lifeOfFirst <= 0
-      ? console.log(`${secondPokemon.name?.english} won!`)
-      : console.log(`Nobody wins`);
+  const [isResult, setIsResult] = useState(true);
+  const showResult = () => {
+    setIsResult(false);
   };
 
-  fight();
+  const [winner, setWinner] = useState();
 
-  return <div>Battleground</div>;
+  const fight = () => {
+    let isFighting = true;
+    while (isFighting) {
+      attackOfFirst > 0 ? (lifeOfSecond -= attackOfFirst) : (lifeOfSecond -= 0);
+      // console.log(`Attack of ${firstPokemon.name?.english} is ${attackOfFirst}`);
+      // console.log(`Life of ${secondPokemon.name?.english} is now ${lifeOfSecond}`);
+      if (lifeOfSecond <= 0) {
+        isFighting = false;
+        setWinner(firstPokemon.name?.english);
+        break;
+      }
+      attackOfSecond > 0 ? (lifeOfFirst -= attackOfSecond) : (lifeOfFirst -= 0);
+      // console.log(`Attack of ${secondPokemon.name?.english} is ${attackOfSecond}`);
+      // console.log(`Life of ${firstPokemon.name?.english} is now ${lifeOfFirst}`);
+      if (lifeOfFirst <= 0) {
+        isFighting = false;
+        setWinner(secondPokemon.name?.english);
+        break;
+      }
+    }
+  };
+
+  return (
+    <div>
+      <p>
+        <b>{firstPokemon.name?.english}</b> {pokeState}
+      </p>
+
+      {isResult ? (
+        <div>The fight goes on...</div>
+      ) : (
+        <div>
+          <p>
+            After a spectacular and exhausting fight taking place in the back
+            room, the winner of this skirmish is... <b>{winner}</b>!{" "}
+          </p>
+        </div>
+      )}
+      {isResult ? (
+        <Button
+          className="btn-warning"
+          onClick={() => {
+            fight();
+            showResult();
+          }}
+        >
+          Who won?
+        </Button>
+      ) : (
+        <>
+          <p>Congratulations!</p>
+          <Button
+            id="navigateBack"
+            onClick={() => navigate("/pokemons")}
+            className="btn-dark"
+          >
+            Back to the list of all Pokemons
+          </Button>
+        </>
+      )}
+    </div>
+  );
 }
