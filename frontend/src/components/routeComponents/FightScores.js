@@ -1,9 +1,28 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
 import SearchForScores from "../generalComponents/SearchForScores";
 
-export default function FightScores({ fightScores }) {
+export default function FightScores() {
+  const [fightScores, setFightScores] = useState([]);
+  const [search, setSearch] = useState("");
+
+  //setFightScores
+  useEffect(() => {
+    const name = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
+    axios
+      .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
+      .then((response) => {
+        setFightScores(response.data);
+        //  console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [search]);
+
   return (
     <div>
-      <SearchForScores />
+      <SearchForScores setSearch={setSearch} />
       <br />
       <br />
       {fightScores.map((scores) => {

@@ -1,37 +1,25 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-export default function SearchForScores() {
+export default function SearchForScores({ setSearch }) {
   const [value, setValue] = useState("");
-
-  const navigate = useNavigate();
+  const [isSearched, setIsSearched] = useState(false);
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-//     axios
-//   .get(`http://localhost:3010/pokemons/pokemonfights/${name}`)
-//   .then((response) => {
-//     setValue(response.data);
-//     //  console.log(response.data)   
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
-//      setValue("");
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.preventDefault();
+    setSearch(value);
+    setIsSearched(true);
+    setValue("");
+  };
 
   return (
-    <Form className="d-flex" 
-    // onSubmit={handleSubmit}
-    >
+    <Form className="d-flex" onSubmit={handleSubmit}>
       <Form.Control
         type="search"
         placeholder="Search the scores by Pokémon's name"
@@ -41,7 +29,7 @@ export default function SearchForScores() {
         value={value}
       />
       <Button variant="outline-dark" type="submit">
-        Search
+        {isSearched ? "See All" : "Search"}
       </Button>
     </Form>
   );

@@ -17,15 +17,15 @@ export default function SearchBar() {
     e.preventDefault();
     const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     axios
-    .get(`http://localhost:3010/pokemons/${name}`)
-    .then((response) => {
-      navigate(`/pokemons/${response.data.name.english}`);
-      //  console.log(response.data)
+      .get(`http://localhost:3010/pokemons/${name}`)
+      .then((response) => {
+        navigate(`/pokemons/fightscores/${response.data.name.english}`);
+        //  console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
-     setValue("");
+    setValue("");
   };
 
   return (

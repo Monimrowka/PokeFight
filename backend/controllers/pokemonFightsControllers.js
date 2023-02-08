@@ -35,7 +35,6 @@ const getFightsByName = async (req, res) => {
         { random_pokemon: name },
       ],
     });
-    console.log(fight);
     res.status(200).json(fight);
   } catch (error) {
     res.status(500).send(error.messages);
