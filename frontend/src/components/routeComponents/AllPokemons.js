@@ -1,10 +1,15 @@
 import { NavLink } from "react-router-dom";
-
-export default function AllPokemons({ pokemons }) {
+import Pagination from "../generalComponents/Pagination";
+export default function AllPokemons({
+  pokemons,
+  paginate,
+  currentPage,
+  setCurrentPage,
+}) {
   return (
     <div>
       <ul>
-        {pokemons.map((pokemon) => {
+        {pokemons.currentPokemons?.map((pokemon) => {
           return (
             <li key={pokemon.id}>
               <NavLink
@@ -17,6 +22,13 @@ export default function AllPokemons({ pokemons }) {
           );
         })}
       </ul>
+      <Pagination
+        pokemonsPerPage={pokemons.limit}
+        totalPokemons={pokemons.totalPokemons}
+        paginate={paginate}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

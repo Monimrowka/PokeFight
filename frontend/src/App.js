@@ -8,21 +8,26 @@ import Pokemons from "./components/routeComponents/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
-
+import { useNavigate } from "react-router-dom";
 function App() {
   const [pokemons, setPokemons] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    navigate(`?page=${pageNumber}`);
+  };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3010/pokemons/`)
+      .get(`http://localhost:3010/pokemons/?page=${currentPage}`)
       .then((response) => {
         setPokemons(response.data);
-        //  console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className="App">
@@ -32,7 +37,14 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route
             path="/pokemons"
-            element={<AllPokemons pokemons={pokemons} />}
+            element={
+              <AllPokemons
+                pokemons={pokemons}
+                paginate={paginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            }
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
         </Routes>
