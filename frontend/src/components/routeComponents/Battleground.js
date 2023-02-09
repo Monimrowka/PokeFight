@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import axios from "axios";
 
 export default function Battleground({ pokemon, random }) {
+  const [isResult, setIsResult] = useState(true);
+  const [fightSaved, setFightSaved] = useState(false);
+  const [winner, setWinner] = useState();
   const navigate = useNavigate();
 
   let pokeState;
@@ -39,33 +43,58 @@ export default function Battleground({ pokemon, random }) {
   const attackOfSecond =
     secondPokemon.base?.Attack - firstPokemon.base?.Defense;
 
-  const [isResult, setIsResult] = useState(true);
   const showResult = () => {
     setIsResult(false);
   };
-
-  const [winner, setWinner] = useState();
 
   const fight = () => {
     let isFighting = true;
     while (isFighting) {
       attackOfFirst > 0 ? (lifeOfSecond -= attackOfFirst) : (lifeOfSecond -= 0);
-      // console.log(`Attack of ${firstPokemon.name?.english} is ${attackOfFirst}`);
-      // console.log(`Life of ${secondPokemon.name?.english} is now ${lifeOfSecond}`);
+      console.log(
+        `Attack of ${firstPokemon.name?.english} is ${attackOfFirst}`
+      );
+      console.log(
+        `Life of ${secondPokemon.name?.english} is now ${lifeOfSecond}`
+      );
       if (lifeOfSecond <= 0) {
         isFighting = false;
         setWinner(firstPokemon.name?.english);
         break;
       }
       attackOfSecond > 0 ? (lifeOfFirst -= attackOfSecond) : (lifeOfFirst -= 0);
-      // console.log(`Attack of ${secondPokemon.name?.english} is ${attackOfSecond}`);
-      // console.log(`Life of ${firstPokemon.name?.english} is now ${lifeOfFirst}`);
+      console.log(
+        `Attack of ${secondPokemon.name?.english} is ${attackOfSecond}`
+      );
+      console.log(
+        `Life of ${firstPokemon.name?.english} is now ${lifeOfFirst}`
+      );
       if (lifeOfFirst <= 0) {
         isFighting = false;
         setWinner(secondPokemon.name?.english);
         break;
       }
     }
+  };
+
+  let gameId;
+  const saveFight = () => {
+    axios
+      .get("http://localhost:3010/pokemons/pokemonfights/showfights")
+      .then((response) => {
+        gameId = response.data[response.data.length - 1].game_id;
+      })
+      .then(() => {
+        axios
+          .post("http://localhost:3010/pokemons/pokemonfights/savefight", {
+            game_id: gameId + 1,
+            chosen_pokemon: pokemon.name?.english,
+            random_pokemon: random.name?.english,
+            winner: winner,
+          })
+          .then((res) => setFightSaved(true));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -97,6 +126,21 @@ export default function Battleground({ pokemon, random }) {
       ) : (
         <>
           <p>Congratulations!</p>
+
+          {fightSaved ? (
+            <Button id="fightSaved" className="btn-light">
+              Fight saved
+            </Button>
+          ) : (
+            <Button
+              id="saveTheFight"
+              onClick={saveFight}
+              className="btn-warning"
+            >
+              Save the fight
+            </Button>
+          )}
+
           <Button
             id="navigateBack"
             onClick={() => navigate("/pokemons")}

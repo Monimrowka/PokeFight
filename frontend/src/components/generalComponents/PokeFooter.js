@@ -7,7 +7,9 @@ export default function PokeFooter() {
     <Navbar className="fixed-bottom" bg="light">
       <Container>
         <Nav className="me-auto">
-          <Nav.Link>Provided to you by Agata, Monika, Simran and Artur ✌</Nav.Link>
+          <Nav.Link>
+            Provided to you by Agata, Monika, Simran and Artur ✌
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

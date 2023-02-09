@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
 import { useNavigate } from "react-router-dom";
+import FightScores from "./components/routeComponents/FightScores";
+
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +20,7 @@ function App() {
     navigate(`?page=${pageNumber}`);
   };
 
+  //setPokemons
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/?page=${currentPage}`)
@@ -47,6 +50,7 @@ function App() {
             }
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
+          <Route path="/fightscores" element={<FightScores />} />
         </Routes>
       </Container>
       <PokeFooter />
