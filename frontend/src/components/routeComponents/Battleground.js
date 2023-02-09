@@ -8,6 +8,7 @@ export default function Battleground({ pokemon, random }) {
   const [isResult, setIsResult] = useState(true);
   const [fightSaved, setFightSaved] = useState(false);
   const [winner, setWinner] = useState();
+
   const navigate = useNavigate();
 
   let pokeState;
@@ -37,15 +38,17 @@ export default function Battleground({ pokemon, random }) {
   };
   getFirstAttacker();
 
-  // const [lifeOfFirst, setLifeOfFirst] = useState(firstPokemon.base?.HP)
-  // const [lifeOfSecond, setLifeOfSecond] = useState(secondPokemon.base?.HP)
-
   let lifeOfFirst = firstPokemon.base?.HP;
   let lifeOfSecond = secondPokemon.base?.HP;
+  const [stateLifeOfFirst, setStateLifeOfFirst] = useState([lifeOfFirst]);
+  const [stateLifeOfSecond, setStateLifeOfSecond] = useState([lifeOfSecond]);
 
-  const attackOfFirst = firstPokemon.base?.Attack - secondPokemon.base?.Defense;
-  const attackOfSecond =
-    secondPokemon.base?.Attack - firstPokemon.base?.Defense;
+  let attackOfFirst =
+    firstPokemon.base?.Attack -
+    Math.ceil(firstPokemon.base?.Defense / secondPokemon.base?.Attack);
+  let attackOfSecond =
+    secondPokemon.base?.Attack -
+    Math.ceil(secondPokemon.base?.Defense / firstPokemon.base?.Attack);
 
   const showResult = () => {
     setIsResult(false);
@@ -61,6 +64,7 @@ export default function Battleground({ pokemon, random }) {
       console.log(
         `Life of ${secondPokemon.name?.english} is now ${lifeOfSecond}`
       );
+      setStateLifeOfSecond([...stateLifeOfSecond, lifeOfSecond]);
       if (lifeOfSecond <= 0) {
         isFighting = false;
         setWinner(firstPokemon.name?.english);
@@ -73,6 +77,7 @@ export default function Battleground({ pokemon, random }) {
       console.log(
         `Life of ${firstPokemon.name?.english} is now ${lifeOfFirst}`
       );
+      setStateLifeOfFirst([...stateLifeOfFirst, lifeOfFirst]);
       if (lifeOfFirst <= 0) {
         isFighting = false;
         setWinner(secondPokemon.name?.english);
@@ -80,6 +85,9 @@ export default function Battleground({ pokemon, random }) {
       }
     }
   };
+
+  // console.log(`The life of Second pokemon is ${stateLifeOfSecond}`)
+  // console.log(`The life of First pokemon is ${stateLifeOfFirst}`)
 
   let gameId;
   const saveFight = () => {
@@ -111,13 +119,39 @@ export default function Battleground({ pokemon, random }) {
         <div>The fight goes on...</div>
       ) : (
         <div>
-          <p> 
-            After a spectacular and exhausting fight taking place in the back
-            room, the winner of this skirmish is... <b>{winner}</b>!{" "}
-          </p>
+          <span>
+            {firstPokemon.name?.english}'s final attack power is {attackOfFirst}
+            . After it deals damage to {secondPokemon.name?.english}, it stays
+            on {stateLifeOfSecond[1]} HP.
+            <br />
+            Now it's {secondPokemon.name?.english} time to attack!
+            <br />
+            It's final attack power is {attackOfSecond}. After it deals damage
+            to {firstPokemon.name?.english}, it stays on {stateLifeOfFirst[1]}{" "}
+            HP.
+            <br />
+            <br /> 
+            
+              {stateLifeOfSecond.map((value) => {
+                return <p key={Math.random()}>{value >= 0 ? value : 0}</p>;
+              })}
+           
+          </span>
+          <br />
+          <span>
+            {" "}
+            The Life of {firstPokemon.name?.english} is:
+            <ul>
+              {stateLifeOfFirst.map((value) => {
+                return <li key={Math.random()}>{value >= 0 ? value : 0}</li>;
+              })}
+            </ul>
+          </span>
+          After a spectacular and exhausting fight taking place in the back
+          room, the winner of this skirmish is... <b>{winner}</b>!{" "}
         </div>
       )}
-      <br/>
+      <br />
       {isResult ? (
         <Button
           className="btn-warning"
