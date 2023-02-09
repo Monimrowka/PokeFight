@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Battleground({ pokemon, random }) {
   const [isResult, setIsResult] = useState(true);
   const [fightSaved, setFightSaved] = useState(false);
+  const [winner, setWinner] = useState();
   const navigate = useNavigate();
 
   let pokeState;
@@ -46,8 +47,6 @@ export default function Battleground({ pokemon, random }) {
     setIsResult(false);
   };
 
-  const [winner, setWinner] = useState();
-
   const fight = () => {
     let isFighting = true;
     while (isFighting) {
@@ -83,18 +82,18 @@ export default function Battleground({ pokemon, random }) {
     axios
       .get("http://localhost:3010/pokemons/pokemonfights/showfights")
       .then((response) => {
-        gameId = response.data[response.data.length-1].game_id
-        console.log(gameId)
+        gameId = response.data[response.data.length - 1].game_id;
       })
       .then(() => {
         axios
-        .post("http://localhost:3010/pokemons/pokemonfights/savefight", {
-        game_id: gameId + 1,
-        chosen_pokemon: pokemon.name?.english,
-        random_pokemon: random.name?.english,
-        winner: winner,
+          .post("http://localhost:3010/pokemons/pokemonfights/savefight", {
+            game_id: gameId + 1,
+            chosen_pokemon: pokemon.name?.english,
+            random_pokemon: random.name?.english,
+            winner: winner,
+          })
+          .then((res) => setFightSaved(true));
       })
-      .then((res) => setFightSaved(true))})
       .catch((err) => console.log(err));
   };
 

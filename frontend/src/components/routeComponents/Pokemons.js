@@ -19,7 +19,6 @@ export default function Pokemons() {
   const { name } = useParams();
 
   //variable to store previously fetched pokemon
-  const [previousPokemon, setPreviousPokemon] = useState({});
   const [prevRandom, setPrevRandom] = useState({});
 
   // backend request to get a Pokemon by name and a random pokemon by id
@@ -27,7 +26,6 @@ export default function Pokemons() {
     axios
       .get(`http://localhost:3010/pokemons/${name}`)
       .then((response) => {
-        setPreviousPokemon(pokemon);
         setPokemon(response.data);
         //  console.log(response.data)
         setIsPokemonLoading(false);
@@ -102,13 +100,16 @@ export default function Pokemons() {
               ""
             ) : (
               <>
-              { prevRandom !== null ? (
-              <Button
-              id="returnToPrevious"
-              className="btn-warning"
-              onClick={returnToPrevious}
-              > Latest Pokemon </Button>
-               ) : null }
+                {prevRandom !== null ? (
+                  <Button
+                    id="returnToPrevious"
+                    className="btn-warning"
+                    onClick={returnToPrevious}
+                  >
+                    {" "}
+                    Latest Pokemon{" "}
+                  </Button>
+                ) : null}
 
                 <Button
                   id="otherRandomPokemon"
