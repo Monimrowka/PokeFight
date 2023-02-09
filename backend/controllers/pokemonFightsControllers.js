@@ -19,14 +19,29 @@ const createFight = async (req, res) => {
 const getFights = async (req, res) => {
   try {
     const fights = await pokemonFights.find({});
-    console.log(`Do you see me?!`)
     res.json(fights);
   } catch (error) {
     res.status(500).send(error.messages);
   }
 };
 
+const getFightsByName = async (req, res) => {
+  const { name } = req.params;
+  try {
+    const fight = await pokemonFights.find({
+      $or: [
+        { chosen_pokemon: name },
+        { random_pokemon: name },
+      ],
+    });
+    res.status(200).json(fight);
+  } catch (error) {
+    res.status(500).send(error.messages);
+  }
+};
+
 module.exports = {
-    createFight,
-    getFights    
-  };
+  createFight,
+  getFights,
+  getFightsByName,
+};

@@ -1,13 +1,9 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-export default function SearchBar() {
+export default function SearchForScores({ setSearch }) {
   const [value, setValue] = useState("");
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -15,16 +11,10 @@ export default function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    axios
-      .get(`http://localhost:3010/pokemons/${name}`)
-      .then((response) => {
-        navigate(`/pokemons/fightscores/${response.data.name.english}`);
-        //  console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(value===''){
+      alert('Please enter a Pokémon name');
+    }
+    setSearch(value);
     setValue("");
   };
 
@@ -32,7 +22,7 @@ export default function SearchBar() {
     <Form className="d-flex" onSubmit={handleSubmit}>
       <Form.Control
         type="search"
-        placeholder="Search by name"
+        placeholder="Search the scores by Pokémon's name"
         className="me-2"
         aria-label="Search"
         onChange={handleChange}

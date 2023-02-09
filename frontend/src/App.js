@@ -8,10 +8,12 @@ import Pokemons from "./components/routeComponents/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
+import FightScores from "./components/routeComponents/FightScores";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
 
+  //setPokemons
   useEffect(() => {
     axios
       .get(`http://localhost:3010/pokemons/`)
@@ -35,6 +37,7 @@ function App() {
             element={<AllPokemons pokemons={pokemons} />}
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
+          <Route path="/fightscores" element={<FightScores />} />
         </Routes>
       </Container>
       <PokeFooter />
