@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 import axios from "axios";
+import Container from "react-bootstrap/esm/Container";
 
 export default function Battleground({ pokemon, random }) {
   const [isResult, setIsResult] = useState(true);
@@ -35,6 +36,9 @@ export default function Battleground({ pokemon, random }) {
     }
   };
   getFirstAttacker();
+
+  // const [lifeOfFirst, setLifeOfFirst] = useState(firstPokemon.base?.HP)
+  // const [lifeOfSecond, setLifeOfSecond] = useState(secondPokemon.base?.HP)
 
   let lifeOfFirst = firstPokemon.base?.HP;
   let lifeOfSecond = secondPokemon.base?.HP;
@@ -98,7 +102,7 @@ export default function Battleground({ pokemon, random }) {
   };
 
   return (
-    <div>
+    <Container>
       <p>
         <b>{firstPokemon.name?.english}</b> {pokeState}
       </p>
@@ -107,12 +111,13 @@ export default function Battleground({ pokemon, random }) {
         <div>The fight goes on...</div>
       ) : (
         <div>
-          <p>
+          <p> 
             After a spectacular and exhausting fight taking place in the back
             room, the winner of this skirmish is... <b>{winner}</b>!{" "}
           </p>
         </div>
       )}
+      <br/>
       {isResult ? (
         <Button
           className="btn-warning"
@@ -150,6 +155,6 @@ export default function Battleground({ pokemon, random }) {
           </Button>
         </>
       )}
-    </div>
+    </Container>
   );
 }

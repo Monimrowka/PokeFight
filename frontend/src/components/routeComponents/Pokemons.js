@@ -13,6 +13,7 @@ export default function Pokemons() {
   const [random, setRandom] = useState({});
   const [showRandom, setShowRandom] = useState(false);
   const [noMoreChanging, setNoMoreChanging] = useState(false);
+  const [isTherePrev, setIsTherePrev] = useState(false);
 
   // state for chosen Pokemon by name
   const [pokemon, setPokemon] = useState({});
@@ -36,11 +37,11 @@ export default function Pokemons() {
   }, [name]);
 
   const randomPokemon = () => {
-    setPrevRandom(random);
     axios
       .get(`http://localhost:3010/pokemons/random/`)
       .then((response) => {
         setRandom(response.data);
+        setPrevRandom(random);
         //  console.log(response.data)
       })
       .catch((error) => {
@@ -52,6 +53,7 @@ export default function Pokemons() {
   const showBattleground = () => setStartFight(false);
   const randomPokemonSetter = () => setIsRandomPokemon(true);
   const noMoreRandom = () => setNoMoreChanging(true);
+  const showLatestButton = () => setIsTherePrev(true);
 
   // Function to return to the previous Pokemon
   const returnToPrevious = () => {
@@ -95,48 +97,53 @@ export default function Pokemons() {
         {showRandom ? (
           <div className="randomPokemon">
             <Pokemon version={random} />
+            <div className="randomPokemonButtons">
+              {noMoreChanging ? (
+                ""
+              ) : (
+                <>
+                  {isTherePrev ? (
+                    <Button
+                      id="returnToPrevious"
+                      className="btn-warning"
+                      onClick={returnToPrevious}
+                    >
+                      Previous one
+                    </Button>
+                  ) : (
+                    ""
+                  )}
 
-            {noMoreChanging ? (
-              ""
-            ) : (
-              <>
-                {prevRandom !== null ? (
                   <Button
-                    id="returnToPrevious"
+                    id="otherRandomPokemon"
                     className="btn-warning"
-                    onClick={returnToPrevious}
+                    onClick={() => {
+                      randomPokemon();
+                      showLatestButton();
+                    }}
                   >
-                    {" "}
-                    Latest Pokemon{" "}
+                    Chose another Pokemon
                   </Button>
-                ) : null}
-
-                <Button
-                  id="otherRandomPokemon"
-                  className="btn-warning"
-                  onClick={randomPokemon}
-                >
-                  Chose another Pokemon
-                </Button>
-                <Button
-                  id="pokemonFight"
-                  className="btn-danger"
-                  onClick={() => {
-                    showBattleground();
-                    noMoreRandom();
-                  }}
-                >
-                  Fight this Pokemon
-                </Button>
-              </>
-            )}
+                  <Button
+                    id="pokemonFight"
+                    className="btn-danger"
+                    onClick={() => {
+                      showBattleground();
+                      noMoreRandom();
+                    }}
+                  >
+                    Fight this Pokemon
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         ) : (
           ""
         )}
       </div>
       {startFight ? (
-        <div>Waiting to start the fight...</div>
+        <div></div>
       ) : (
         <Battleground pokemon={pokemon} random={random} />
       )}
