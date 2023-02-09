@@ -1,7 +1,20 @@
 const data = require("../data.json");
 
 const getAllPokemons = (req, res) => {
-  res.send(data);
+  const { page } = req.query;
+  const pokemonsPerPage = 15;
+
+  const indexOfLastPokemon = page * pokemonsPerPage; //1*15
+
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; //0
+
+  const currentPokemons = data.slice(indexOfFirstPokemon, indexOfLastPokemon); //(0,15) ... 15 is not included
+
+  res.send({
+    currentPokemons: currentPokemons,
+    limit: pokemonsPerPage, //15
+    totalPokemons: data.length, //809
+  });
 };
 
 const getPokemonByName = (req, res) => {
