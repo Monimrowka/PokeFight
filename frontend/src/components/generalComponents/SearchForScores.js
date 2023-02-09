@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 
 export default function SearchForScores({ setSearch }) {
   const [value, setValue] = useState("");
-  const [isSearched, setIsSearched] = useState(false);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -12,9 +11,10 @@ export default function SearchForScores({ setSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.preventDefault();
+    if(value===''){
+      alert('Please enter a Pokémon name');
+    }
     setSearch(value);
-    setIsSearched(true);
     setValue("");
   };
 
@@ -29,7 +29,7 @@ export default function SearchForScores({ setSearch }) {
         value={value}
       />
       <Button variant="outline-dark" type="submit">
-        {isSearched ? "See All" : "Search"}
+        Search
       </Button>
     </Form>
   );

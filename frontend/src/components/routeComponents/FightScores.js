@@ -35,7 +35,7 @@ export default function FightScores() {
               <li>{scores.chosen_pokemon}</li>
               <li>{scores.random_pokemon}</li>
             </ul>
-            <h6>The winner of this fight was {scores.winner}</h6>
+            <h6>The winner of this fight was <b>{scores.winner}</b></h6>
             <br />
             <br />
           </div>
