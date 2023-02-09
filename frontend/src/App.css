@@ -17,8 +17,22 @@
 }
 
 .battleground {
-  margin: auto;
+    margin: auto;
 }
+
+.randomPokemon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.randomPokemonButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1em;
+}
+
 /* .pages {
   list-style: none;
   display: flex;
@@ -108,3 +122,4 @@
 .poke-type-steel {
   background-color: rgb(125, 120, 120);
 }
+
