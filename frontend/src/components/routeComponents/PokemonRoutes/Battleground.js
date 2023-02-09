@@ -86,9 +86,6 @@ export default function Battleground({ pokemon, random }) {
     }
   };
 
-  // console.log(`The life of Second pokemon is ${stateLifeOfSecond}`)
-  // console.log(`The life of First pokemon is ${stateLifeOfFirst}`)
-
   let gameId;
   const saveFight = () => {
     axios
@@ -130,12 +127,10 @@ export default function Battleground({ pokemon, random }) {
             to {firstPokemon.name?.english}, it stays on {stateLifeOfFirst[1]}{" "}
             HP.
             <br />
-            <br /> 
-            
-              {stateLifeOfSecond.map((value) => {
-                return <p key={Math.random()}>{value >= 0 ? value : 0}</p>;
-              })}
-           
+            <br />
+            {stateLifeOfSecond.map((value) => {
+              return <p key={Math.random()}>{value >= 0 ? value : 0}</p>;
+            })}
           </span>
           <br />
           <span>

@@ -3,13 +3,15 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import PokeFooter from "./components/generalComponents/PokeFooter";
 import PokeHeader from "./components/generalComponents/PokeHeader";
-import AllPokemons from "./components/routeComponents/AllPokemons";
-import Pokemons from "./components/routeComponents/Pokemons";
+import AllPokemons from "./components/routeComponents/PokemonRoutes/AllPokemons";
+import Pokemons from "./components/routeComponents/PokemonRoutes/Pokemons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
 import { useNavigate } from "react-router-dom";
-import FightScores from "./components/routeComponents/FightScores";
+import FightScores from "./components/routeComponents/ScoresRoutes/FightScores";
+import Scores from "./components/routeComponents/ScoresRoutes/Scores";
+import AllScores from "./components/routeComponents/ScoresRoutes/AllScores";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -50,7 +52,8 @@ function App() {
             }
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
-          <Route path="/fightscores" element={<FightScores />} />
+          <Route path="/fightscores" element={<AllScores />} />
+          <Route path="/fightscores/:name" element={<Scores />} />
         </Routes>
       </Container>
       <PokeFooter />

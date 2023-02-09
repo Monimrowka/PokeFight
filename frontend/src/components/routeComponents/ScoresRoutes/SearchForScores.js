@@ -1,14 +1,12 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar() {
+export default function SearchForScores() {
   const [value, setValue] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,14 +20,12 @@ export default function SearchBar() {
     } else {
       const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
       axios
-        .get(`http://localhost:3010/pokemons/${name}`)
+        .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
         .then((response) => {
-          if (response.data) {
-            navigate(`/pokemons/${response.data.name.english}`);
+          if (response.data) {           
+            navigate(`/fightscores/${name}`);
           } else {
-            toast(
-              "There is no Pokémon of this name. Please search for different name."
-            );
+            toast("This Pokémon did not fight yet");
           }
         })
         .catch((error) => {
@@ -43,7 +39,7 @@ export default function SearchBar() {
     <Form className="d-flex" onSubmit={handleSubmit}>
       <Form.Control
         type="search"
-        placeholder="Search by name"
+        placeholder="Search the scores by Pokémon's name"
         className="me-2"
         aria-label="Search"
         onChange={handleChange}
@@ -52,7 +48,6 @@ export default function SearchBar() {
       <Button variant="outline-dark" type="submit">
         Search
       </Button>
-      <ToastContainer />
     </Form>
   );
 }
