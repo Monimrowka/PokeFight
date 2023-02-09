@@ -9,11 +9,12 @@ export default function FightScores() {
   //setFightScores
   useEffect(() => {
     const name = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
+    console.log(name);
     axios
       .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
       .then((response) => {
         setFightScores(response.data);
-        //  console.log(response.data)
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

@@ -2,6 +2,7 @@ const data = require("../data.json");
 
 const getAllPokemons = (req, res) => {
   const { page } = req.query;
+
   const pokemonsPerPage = 15;
 
   const indexOfLastPokemon = page * pokemonsPerPage; //1*15
