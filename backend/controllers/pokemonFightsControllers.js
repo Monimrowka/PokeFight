@@ -31,7 +31,6 @@ const getFightsByName = async (req, res) => {
     const fight = await pokemonFights.find({
       $or: [
         { chosen_pokemon: name },
-        { winner: name },
         { random_pokemon: name },
       ],
     });
