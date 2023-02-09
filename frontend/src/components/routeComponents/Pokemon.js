@@ -21,7 +21,7 @@ export default function Pokemon({ version }) {
   return (
     <div>
       {isLoading ? (
-        <p>Loading random Pokemon</p>
+        <p>Loading the Pokemon</p>
       ) : (
         <img src={pokePic} alt={version.name?.english} style={{ width: 150 }} />
       )}
