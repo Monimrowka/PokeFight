@@ -26,7 +26,6 @@ export default function SearchBar() {
       axios
         .get(`http://localhost:3010/pokemons/${name}`)
         .then((response) => {
-          console.log(response);
           if (response.data) {
             navigate(`/pokemons/${response.data.name.english}`);
           } else {
