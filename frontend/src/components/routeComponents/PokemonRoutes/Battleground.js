@@ -45,10 +45,10 @@ export default function Battleground({ pokemon, random }) {
 
   let attackOfFirst =
     firstPokemon.base?.Attack -
-    Math.ceil(firstPokemon.base?.Defense / secondPokemon.base?.Attack);
+    Math.ceil( secondPokemon.base?.Attack / firstPokemon.base?.Defense);
   let attackOfSecond =
     secondPokemon.base?.Attack -
-    Math.ceil(secondPokemon.base?.Defense / firstPokemon.base?.Attack);
+    Math.ceil(firstPokemon.base?.Attack / secondPokemon.base?.Defense);
 
   const showResult = () => {
     setIsResult(false);
