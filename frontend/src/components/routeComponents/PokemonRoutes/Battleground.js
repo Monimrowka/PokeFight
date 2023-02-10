@@ -113,9 +113,13 @@ export default function Battleground({ pokemon, random }) {
 
   return (
     <Container className="battleContainer">
-      <p>
-        <b>{firstPokemon.name?.english}</b> {pokeState}
-      </p>
+      {isResult ? (
+        <p>
+          <b>{firstPokemon.name?.english}</b> {pokeState}
+        </p>
+      ) : (
+        ""
+      )}
 
       {isResult ? (
         <div></div>
