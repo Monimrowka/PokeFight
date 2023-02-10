@@ -33,35 +33,11 @@
     gap: 1em;
 }
 
-/* .pages {
-  list-style: none;
+.afterFightBtns {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-.pages li {
-  padding: 5px 15px;
-  border: 1px solid black;
-  cursor: pointer;
-  text-decoration: none;
-}
-.pages li.active {
-  background-color: rgb(158, 187, 225);
+  gap: 1em;
 }
 
-.pages li:hover {
-  background-color: lightsteelblue;
-}
-.page-links {
-  text-decoration: none;
-  color: black;
-} */
-.prev-next-button {
-  border-radius: 5px;
-  padding: 5px 15px;
-  margin: 10px;
-  background-color: burlywood;
-}
 .poke-type {
   border-radius: 5px;
   padding: 5px;

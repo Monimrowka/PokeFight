@@ -25,7 +25,7 @@ export default function Pokemon({ version }) {
       ) : (
         <img src={pokePic} alt={version.name?.english} style={{ width: 150 }} />
       )}
-      <h3>{version.name?.english}</h3>      
+      <h3>{version.name?.english}</h3>
       <p>Base:</p>
       <ul>
         <li>Speed: {version.base?.Speed}</li>

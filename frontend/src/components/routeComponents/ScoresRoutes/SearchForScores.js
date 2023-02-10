@@ -19,12 +19,15 @@ export default function SearchForScores() {
       toast("Please enter Pokémon name that fought");
     } else {
       const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-      console.log(name)
+      console.log(name);
       axios
         .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
-        .then((response) => { 
-          console.log(response.data)
-          if (response?.data[0]?.chosen_pokemon === name || response?.data[0]?.random_pokemon === name) {           
+        .then((response) => {
+          console.log(response.data);
+          if (
+            response?.data[0]?.chosen_pokemon === name ||
+            response?.data[0]?.random_pokemon === name
+          ) {
             navigate(`/fightscores/${name}`);
           } else if (response.data) {
             toast("This Pokémon did not fight yet");

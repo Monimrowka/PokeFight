@@ -1,4 +1,4 @@
-import Pagination from "../../generalComponents/Pagination";
+import Pagination from "./Pagination";
 import Card from "react-bootstrap/Card";
 export default function AllPokemons({
   pokemons,
@@ -20,7 +20,7 @@ export default function AllPokemons({
                 <Card.Title>{pokemon.name.english}</Card.Title>
                 <br />
                 <Card.Text>
-                  {pokemon.type.map((ty) => {              
+                  {pokemon.type.map((ty) => {
                     return (
                       <span
                         className={
@@ -74,7 +74,7 @@ export default function AllPokemons({
               </Card.Body>
             </Card>
           );
-        })}       
+        })}
       </div>
       <Pagination
         pokemonsPerPage={pokemons.limit}

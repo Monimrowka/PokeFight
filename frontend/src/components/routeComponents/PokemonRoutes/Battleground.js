@@ -89,8 +89,9 @@ export default function Battleground({ pokemon, random }) {
   let gameId;
   const saveFight = () => {
     axios
-      .get("http://localhost:3010/pokemons/pokemonfights/showfights")
+      .get("http://localhost:3010/pokemons/pokemonfights/showfights/all")
       .then((response) => {
+        console.log(response.data);
         gameId = response.data[response.data.length - 1].game_id;
       })
       .then(() => {
@@ -108,7 +109,7 @@ export default function Battleground({ pokemon, random }) {
 
   const goToScores = () => {
     navigate("/fightscores");
-  }
+  };
 
   return (
     <Container className="battleContainer">
@@ -118,7 +119,7 @@ export default function Battleground({ pokemon, random }) {
 
       {isResult ? (
         <div></div>
-        ) : (
+      ) : (
         <div>
           <span>
             <p>
