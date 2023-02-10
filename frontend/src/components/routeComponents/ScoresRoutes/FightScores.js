@@ -30,7 +30,7 @@ export default function FightScores({ variant }) {
         onClick={() => navigate("/fightscores")}
         className="btn-dark"
       >
-        Back to the list
+        Back to the scores
       </Button>
     </div>
   );

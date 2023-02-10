@@ -21,8 +21,10 @@ export default function SearchForScores() {
       const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
       axios
         .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
-        .then((response) => {
-          if (response.data) {           
+        .then((response) => { 
+          console.log(response.data)
+          console.log(response.data.chosen_pokemon)
+          if (response.data.chosen_pokemon === name || response.data.random_pokemon === name) {           
             navigate(`/fightscores/${name}`);
           } else {
             toast("This Pokémon did not fight yet");
