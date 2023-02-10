@@ -17,9 +17,23 @@ const createFight = async (req, res) => {
 };
 
 const getFights = async (req, res) => {
+  const { page } = req.query;
   try {
     const fights = await pokemonFights.find({});
-    res.json(fights);
+    const fightsPerPage = 8;
+
+    const indexOfLastFight = page * fightsPerPage; //1*15
+
+    const indexOfFirstFight = indexOfLastFight - fightsPerPage; //0
+
+    const currentFights = fights.slice(indexOfFirstFight, indexOfLastFight); //(0,15) ... 15 is not included
+    // res.json(fights);
+
+    res.json({
+      currentFights: currentFights,
+      limit: fightsPerPage,
+      totalFights: fights.length,
+    });
   } catch (error) {
     res.status(500).send(error.messages);
   }
@@ -29,10 +43,7 @@ const getFightsByName = async (req, res) => {
   const { name } = req.params;
   try {
     const fight = await pokemonFights.find({
-      $or: [
-        { chosen_pokemon: name },
-        { random_pokemon: name },
-      ],
+      $or: [{ chosen_pokemon: name }, { random_pokemon: name }],
     });
     res.status(200).json(fight);
   } catch (error) {

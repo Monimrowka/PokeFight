@@ -1,18 +1,18 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
+import axios from "axios";
 export default function SearchForScores({ setSearch }) {
   const [value, setValue] = useState("");
-
+  const [searchedResults, setSearchedResults] = useState([]);
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(value===''){
-      alert('Please enter a Pokémon name');
+    if (value === "") {
+      alert("Please enter a Pokémon name");
     }
     setSearch(value);
     setValue("");

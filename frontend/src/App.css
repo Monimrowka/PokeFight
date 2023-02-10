@@ -1,6 +1,6 @@
 .appContainer {
-    margin-top: 2em;
-    margin-bottom: 5em;
+  margin-top: 2em;
+  margin-bottom: 5em;
 }
 
 .pokemons {
@@ -17,20 +17,20 @@
 }
 
 .battleground {
-    margin: auto;
+  margin: auto;
 }
 
 .randomPokemon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .randomPokemonButtons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1em;
 }
 
 /* .pages {
@@ -122,4 +122,9 @@
 .poke-type-steel {
   background-color: rgb(125, 120, 120);
 }
+.table-head {
+  /* text-transform: uppercase; */
 
+  font-size: larger;
+  font-weight: 500;
+}

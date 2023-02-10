@@ -2,6 +2,7 @@ const data = require("../data.json");
 
 const getAllPokemons = (req, res) => {
   const { page } = req.query;
+
   const pokemonsPerPage = 15;
 
   const indexOfLastPokemon = page * pokemonsPerPage; //1*15
@@ -10,7 +11,7 @@ const getAllPokemons = (req, res) => {
 
   const currentPokemons = data.slice(indexOfFirstPokemon, indexOfLastPokemon); //(0,15) ... 15 is not included
 
-  res.send({
+  res.json({
     currentPokemons: currentPokemons,
     limit: pokemonsPerPage, //15
     totalPokemons: data.length, //809

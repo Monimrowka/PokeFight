@@ -23,6 +23,7 @@ function App() {
   //setPokemons
   useEffect(() => {
     axios
+
       .get(`http://localhost:3010/pokemons/?page=${currentPage}`)
       .then((response) => {
         setPokemons(response.data);
@@ -50,6 +51,8 @@ function App() {
             }
           />
           <Route path="pokemons/:name" element={<Pokemons />} />
+
+          {/* <Route path="/fightscores/:page" element={<FightScores />} /> */}
           <Route path="/fightscores" element={<FightScores />} />
         </Routes>
       </Container>

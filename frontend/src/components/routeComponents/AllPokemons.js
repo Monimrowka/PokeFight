@@ -21,10 +21,11 @@ export default function AllPokemons({
                 <Card.Title>{pokemon.name.english}</Card.Title>
                 <br />
                 <Card.Text>
-                  {pokemon.type.map((ty) => {
+                  {pokemon.type.map((ty, index) => {
                     //return <span className="poke-type">{ty} </span>;
                     return (
                       <span
+                        key={ty[index]}
                         className={
                           ty === "Grass"
                             ? "poke-type poke-type-grass"
