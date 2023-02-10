@@ -7,9 +7,7 @@ const {
   getRandomPokemon,
 } = require("../controllers/pokemonControllers");
 
-// app.route("/").get(getAllPokemons);
 app.route("/").get(getAllPokemons);
-
 app.route("/random/").get(getRandomPokemon);
 app.route("/:name").get(getPokemonByName);
 

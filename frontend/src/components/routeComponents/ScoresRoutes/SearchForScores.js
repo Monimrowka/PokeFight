@@ -1,14 +1,12 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar() {
+export default function SearchForScores() {
   const [value, setValue] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,18 +16,21 @@ export default function SearchBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value === "") {
-      toast("Please enter Pokémon name to search");
+      toast("Please enter Pokémon name that fought");
     } else {
       const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+      console.log(name);
       axios
-        .get(`http://localhost:3010/pokemons/${name}`)
+        .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
         .then((response) => {
-          if (response.data) {
-            navigate(`/pokemons/${response.data.name.english}`);
-          } else {
-            toast(
-              "There is no Pokémon of this name. Please search for different name."
-            );
+          console.log(response.data);
+          if (
+            response?.data[0]?.chosen_pokemon === name ||
+            response?.data[0]?.random_pokemon === name
+          ) {
+            navigate(`/fightscores/${name}`);
+          } else if (response.data) {
+            toast("This Pokémon did not fight yet");
           }
         })
         .catch((error) => {
@@ -43,7 +44,7 @@ export default function SearchBar() {
     <Form className="d-flex" onSubmit={handleSubmit}>
       <Form.Control
         type="search"
-        placeholder="Search by name"
+        placeholder="Search the scores by Pokémon's name"
         className="me-2"
         aria-label="Search"
         onChange={handleChange}

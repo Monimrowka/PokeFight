@@ -13,8 +13,6 @@ export default function PokeHeader() {
           <Nav className="me-auto">
             <Nav.Link href="/pokemons">List of all Pokémons</Nav.Link>
             <Nav.Link href="/fightscores">Fight Scores</Nav.Link>
-
-            {/* <Nav.Link href="/fightscores/:page">Fight Scores</Nav.Link> */}
           </Nav>
           <SearchBar />
         </Navbar.Collapse>

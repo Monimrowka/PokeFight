@@ -1,5 +1,4 @@
-import { NavLink } from "react-router-dom";
-import Pagination from "../generalComponents/Pagination";
+import Pagination from "./Pagination";
 import Card from "react-bootstrap/Card";
 export default function AllPokemons({
   pokemons,
@@ -21,11 +20,9 @@ export default function AllPokemons({
                 <Card.Title>{pokemon.name.english}</Card.Title>
                 <br />
                 <Card.Text>
-                  {pokemon.type.map((ty, index) => {
-                    //return <span className="poke-type">{ty} </span>;
+                  {pokemon.type.map((ty) => {
                     return (
                       <span
-                        key={ty[index]}
                         className={
                           ty === "Grass"
                             ? "poke-type poke-type-grass"
@@ -78,20 +75,6 @@ export default function AllPokemons({
             </Card>
           );
         })}
-        {/* <ul>
-          {pokemons.currentPokemons?.map((pokemon) => {
-            return (
-              <li key={pokemon.id}>
-                <NavLink
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to={`/pokemons/${pokemon.name.english}`}
-                >
-                  {pokemon.name.english}
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul> */}
       </div>
       <Pagination
         pokemonsPerPage={pokemons.limit}
@@ -100,7 +83,6 @@ export default function AllPokemons({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      {/* </div> */}
     </>
   );
 }
