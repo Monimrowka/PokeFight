@@ -9,9 +9,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import HomePage from "./components/generalComponents/HomePage";
 import { useNavigate } from "react-router-dom";
-import FightScores from "./components/routeComponents/ScoresRoutes/FightScores";
 import Scores from "./components/routeComponents/ScoresRoutes/Scores";
 import AllScores from "./components/routeComponents/ScoresRoutes/AllScores";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -57,6 +57,7 @@ function App() {
         </Routes>
       </Container>
       <PokeFooter />
+      <ToastContainer />
     </div>
   );
 }

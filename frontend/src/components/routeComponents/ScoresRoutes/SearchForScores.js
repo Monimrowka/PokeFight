@@ -16,17 +16,17 @@ export default function SearchForScores() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value === "") {
-      toast("Please enter Pokémon name to search");
+      toast("Please enter Pokémon name that fought");
     } else {
       const name = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+      console.log(name)
       axios
         .get(`http://localhost:3010/pokemons/pokemonfights/showfights/${name}`)
         .then((response) => { 
           console.log(response.data)
-          console.log(response.data.chosen_pokemon)
-          if (response.data.chosen_pokemon === name || response.data.random_pokemon === name) {           
+          if (response?.data[0]?.chosen_pokemon === name || response?.data[0]?.random_pokemon === name) {           
             navigate(`/fightscores/${name}`);
-          } else {
+          } else if (response.data) {
             toast("This Pokémon did not fight yet");
           }
         })

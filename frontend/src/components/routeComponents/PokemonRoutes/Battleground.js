@@ -106,44 +106,106 @@ export default function Battleground({ pokemon, random }) {
       .catch((err) => console.log(err));
   };
 
+  const goToScores = () => {
+    navigate("/fightscores");
+  }
+
   return (
-    <Container>
+    <Container className="battleContainer">
       <p>
         <b>{firstPokemon.name?.english}</b> {pokeState}
       </p>
 
       {isResult ? (
-        <div>The fight goes on...</div>
-      ) : (
+        <div></div>
+        ) : (
         <div>
           <span>
-            {firstPokemon.name?.english}'s final attack power is {attackOfFirst}
-            . After it deals damage to {secondPokemon.name?.english}, it stays
-            on {stateLifeOfSecond[1]} HP.
-            <br />
-            Now it's {secondPokemon.name?.english} time to attack!
-            <br />
-            It's final attack power is {attackOfSecond}. After it deals damage
-            to {firstPokemon.name?.english}, it stays on {stateLifeOfFirst[1]}{" "}
-            HP.
-            <br />
-            <br />
-            {stateLifeOfSecond.map((value) => {
-              return <p key={Math.random()}>{value >= 0 ? value : 0}</p>;
-            })}
+            <p>
+              <b>{firstPokemon.name?.english}'s</b> final attack power is{" "}
+              <b>{attackOfFirst}</b>.
+            </p>
+
+            {/* 1st phase || First attacks Second */}
+
+            <p>
+              The damage it deals to <b>{secondPokemon.name?.english}</b>{" "}
+              {stateLifeOfSecond[1] > 0
+                ? `leaves it's opponent on ${stateLifeOfSecond[1]} HP`
+                : `is more than enough to win this fight`}
+              !
+            </p>
           </span>
-          <br />
+
+          {/* 1st phase part 2 || Check whether second still alive - if no, show nothing */}
+
+          {stateLifeOfSecond[1] > 0 ? (
+            <>
+              <span>
+                <p>
+                  Now it's <b>{secondPokemon.name?.english}</b> time to attack!
+                </p>
+                <p>
+                  It's final attack power is <b>{attackOfSecond}</b>. After
+                  dealing damage to <b>{firstPokemon.name?.english}</b>{" "}
+                  {stateLifeOfFirst[1] > 0
+                    ? `it's opponent remains with ${stateLifeOfFirst[1]} HP`
+                    : `it wins the fight`}
+                  !
+                </p>
+              </span>
+
+              {/* 2nd phase || Check whether first still alive - if no, show nothing */}
+
+              {stateLifeOfFirst[1] > 0 ? (
+                <>
+                  <span>
+                    <p>
+                      Again, it's time for <b>{firstPokemon.name?.english}</b>{" "}
+                      to attack!
+                    </p>
+                    <p>
+                      It deals <b>{attackOfFirst}</b> to{" "}
+                      <b>{secondPokemon.name?.english}</b>{" "}
+                      {stateLifeOfSecond[2] > 0
+                        ? `, leaving it on ${stateLifeOfSecond[2]} HP`
+                        : `and wins this fight`}
+                      !{" "}
+                    </p>
+                  </span>
+
+                  {/* 2nd phase part 2 || Check whether second still alive - if no, show nothing */}
+
+                  {stateLifeOfSecond[2] > 0 ? (
+                    <span>
+                      <p>
+                        This is the final attack of this fight, and it's
+                        performed by <b>{secondPokemon.name?.english}</b>!
+                      </p>
+                      <p>
+                        It deals <b>{attackOfSecond}</b> to{" "}
+                        <b>{firstPokemon.name?.english}</b>{" "}
+                        {stateLifeOfFirst[2] > 0
+                          ? `, leaving it on ${stateLifeOfSecond[2]} HP`
+                          : `and wins this fight`}
+                        !{" "}
+                      </p>
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </>
+              ) : (
+                ""
+              )}
+            </>
+          ) : (
+            ""
+          )}
           <span>
-            {" "}
-            The Life of {firstPokemon.name?.english} is:
-            <ul>
-              {stateLifeOfFirst.map((value) => {
-                return <li key={Math.random()}>{value >= 0 ? value : 0}</li>;
-              })}
-            </ul>
+            After a spectacular and exhausting fight, <b>{winner}</b> is the
+            winner of this skirmish!
           </span>
-          After a spectacular and exhausting fight taking place in the back
-          room, the winner of this skirmish is... <b>{winner}</b>!{" "}
         </div>
       )}
       <br />
@@ -155,33 +217,38 @@ export default function Battleground({ pokemon, random }) {
             showResult();
           }}
         >
-          Who won?
+          Let's fight!
         </Button>
       ) : (
         <>
           <p>Congratulations!</p>
+          <div className="afterFightBtns">
+            {fightSaved ? (
+              <Button
+                id="fightSaved"
+                className="btn-light"
+                onClick={goToScores}
+              >
+                See the scores
+              </Button>
+            ) : (
+              <Button
+                id="saveTheFight"
+                onClick={saveFight}
+                className="btn-warning"
+              >
+                Save the fight
+              </Button>
+            )}
 
-          {fightSaved ? (
-            <Button id="fightSaved" className="btn-light">
-              Fight saved
-            </Button>
-          ) : (
             <Button
-              id="saveTheFight"
-              onClick={saveFight}
-              className="btn-warning"
+              id="navigateBack"
+              onClick={() => navigate("/pokemons")}
+              className="btn-dark"
             >
-              Save the fight
+              Back to the list of all Pokemons
             </Button>
-          )}
-
-          <Button
-            id="navigateBack"
-            onClick={() => navigate("/pokemons")}
-            className="btn-dark"
-          >
-            Back to the list of all Pokemons
-          </Button>
+          </div>
         </>
       )}
     </Container>

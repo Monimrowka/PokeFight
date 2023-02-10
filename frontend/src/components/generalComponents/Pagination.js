@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
+
 export default function Pagination({
   pokemonsPerPage,
   totalPokemons,
@@ -35,13 +37,13 @@ export default function Pagination({
     <div className=" d-flex flex-direction-row justify-content-center mt-3">
       {/* <ul className="pages"> */}
       {/* <li onClick={handlePrevious}> */}
-      <button
+      <Button
         onClick={handlePrevious}
-        className="prev-next-button"
+        className="btn-dark"
         disabled={currentPage === 1}
       >
         {/* &lt;&lt; */} prev
-      </button>
+      </Button>
       {/* </li> */}
       {/* {pageNumbers.map((number) => {
           if (number < maxPageLimit + 1 && number > minPageLimit) {
@@ -59,13 +61,13 @@ export default function Pagination({
           }
         })} */}
       {/* <li onClick={handleNext}> */}
-      <button
+      <Button
         onClick={handleNext}
-        className="prev-next-button"
+        className="btn-dark"
         disabled={currentPage === pageNumbers.length}
       >
         {/* &gt;&gt; */} next
-      </button>
+      </Button>
       {/* </li> */}
       {/* </ul> */}
     </div>
