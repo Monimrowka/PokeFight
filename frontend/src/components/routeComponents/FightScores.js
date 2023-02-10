@@ -40,7 +40,7 @@ export default function FightScores() {
       <SearchForScores setSearch={setSearch} />
       <br />
       {/* <br /> */}
-      {/* <p className="text-center">
+      <p className="text-center">
         {`Page ${currentPage}`} of{" "}
         {Math.ceil(fightScores.totalFights / fightScores.limit)}
       </p>
@@ -61,8 +61,8 @@ export default function FightScores() {
             <br />
           </div>
         );
-      })} */}
-      <p className="text-center">
+      })}
+      {/* <p className="text-center">
         {`Page ${currentPage}`} of{" "}
         {Math.ceil(fightScores.totalFights / fightScores.limit)}
       </p>
@@ -90,7 +90,7 @@ export default function FightScores() {
             );
           })}
         </tbody>
-      </Table>
+      </Table> */}
       <div className="d-flex flex-direction-row justify-content-center mt-3">
         <button
           onClick={handlePrevious}
